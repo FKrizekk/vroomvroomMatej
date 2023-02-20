@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
 
 	public GameObject car;
 	public GameObject PlayerCamera;
-	public GameObject getInText;
+	public TMP_Text interactText;
 	
 	public GameObject screen;
 	public GameObject gunScreen;
@@ -22,6 +23,8 @@ public class PlayerScript : MonoBehaviour
 	bool canTalk = false;
 	public bool isInCar = false;
 	public bool isGunning = false;
+	
+	string lookingAt = "";
 
 
 	public GunCameraScript gunCameraScript;
@@ -59,16 +62,21 @@ public class PlayerScript : MonoBehaviour
 					canTalk = false;
 				}else if(hit.collider.gameObject.tag == "NPC"){
 					canTalk = true;
+					lookingAt = hit.collider.gameObject.name;
 					canGetIn = false;
 				}else{
 					canGetIn = false;
 					canTalk = false;
+					interactText.text = "";
 				}
 			}else{
 				canGetIn = false;
+				canTalk = false;
+				interactText.text = "";
 			}
 
 			if(canTalk){
+				interactText.text = "Press 'E' to interact with " + lookingAt;
 				if(Input.GetKeyDown("e")){
 					hit.collider.gameObject.GetComponent<NPCScript>().Talk();
 				}
@@ -79,6 +87,7 @@ public class PlayerScript : MonoBehaviour
 		}else{
 			//INCAR
 			canTalk = false;
+			interactText.text = "";
 			if(Input.GetKeyDown("e")){
 				car.GetComponent<SimpleCarController>().engine.setPitch(1f);
 				GetOut();
@@ -99,13 +108,12 @@ public class PlayerScript : MonoBehaviour
 
 		}
 
-		if(canGetIn){
-			getInText.SetActive(true);
+		if(canGetIn && !canTalk){
+			interactText.text = "Press 'E' to get in";
 			if(Input.GetKeyDown("e")){
 				GetIn();
+				interactText.text = "";
 			}
-		}else{
-			getInText.SetActive(false);
 		}
 		
 		if(Input.GetKeyDown("m"))
