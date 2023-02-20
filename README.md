@@ -5,3 +5,5 @@ My 3D horror-ish game where a sentient car named Matej, chases you through a des
 
 
 NPC Scripts: https://docs.google.com/document/d/167kUOXVfeQBblNI6lGUyck8FJGoeUQIIXD4IZzvetwE/edit?usp=sharing
+
+Itch.io link for download: https://cold-y.itch.io/vroom-vroom-matej
