@@ -1,0 +1,9 @@
+NPC SCRIPT
+
+Pepa:
+  quest acquire:
+    do this, do that.
+  return before finishing:
+    fak off jeste to nemas!
+  finishing:
+    dekuji moc tady mas penize.
