@@ -24,6 +24,14 @@ public class MatejController : MonoBehaviour
 	void Update()
 	{
 		Debug.Log(health);
+		
+		if(Input.GetKeyDown("u"))
+		{
+			anim.SetBool("Rockets", true);
+		}else if(Input.GetKeyDown("i"))
+		{
+			anim.SetBool("Rockets", false);
+		}
 	}
 
 	void ActivateMatej(){
