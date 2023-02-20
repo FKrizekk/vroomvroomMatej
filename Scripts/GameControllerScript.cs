@@ -27,7 +27,18 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	void Update(){
-		
+		if(Input.GetKeyDown("g"))
+		{
+			var temp = objectivesStatus.ToCharArray();
+			temp[0] = 'E';
+			objectivesStatus = new string(temp);
+		}
+		if(Input.GetKeyDown("h"))
+		{
+			var temp = objectivesStatus.ToCharArray();
+			temp[0] = 'Y';
+			objectivesStatus = new string(temp);
+		}
 	}
 
 	public void UpdateVars(){
