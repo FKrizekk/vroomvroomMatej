@@ -40,7 +40,7 @@ public class MatejMovement : MonoBehaviour
         }
 
         if(active && safetyOn && safetyOn2){
-            var step = 1f * Time.deltaTime * Mathf.Clamp(Vector3.Distance(player.transform.position,transform.position), 0, 20); // calculate distance to move
+            var step = 1f * Time.deltaTime * Mathf.Clamp(Vector3.Distance(player.transform.position,transform.position), 0, 25); // calculate distance to move
                 if(player.transform.position.y - transform.position.y < 0){
                     transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, transform.position.y,player.transform.position.z), step);
                 }else{

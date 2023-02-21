@@ -59,7 +59,7 @@ public class GunScript : MonoBehaviour
 			case 1:
 				yield return new WaitUntil(() => Input.GetMouseButtonDown(0) && gunCameraScript.active);
 				anim.SetBool("Shoot",true);
-				yield return new WaitForSeconds(0.05f);
+				yield return new WaitForSeconds(0.005f);
 				anim.SetBool("Shoot",false);
 				break;
 		}
