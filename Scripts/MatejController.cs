@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MatejController : MonoBehaviour
 {   
@@ -23,6 +24,16 @@ public class MatejController : MonoBehaviour
 	
 	public Transform LRocketLauncher;
 	public Transform RRocketLauncher;
+	
+	public TMP_Text blockCountdown;
+	
+	public GameObject[] DangerSigns;
+	
+	float rocketStartTime;
+	
+	private bool Blocking = false;
+	
+	private bool blockFailed = false;
 
 	void Start()
 	{
@@ -39,6 +50,23 @@ public class MatejController : MonoBehaviour
 		}else if(Input.GetKeyDown("i"))
 		{
 			anim.SetBool("Rockets", false);
+		}
+		
+		if(Blocking)
+		{
+			if(Time.time - rocketStartTime < 1)
+			{
+				if(Input.GetKeyDown("c"))
+				{
+					StopCoroutine(RocketLogic());
+					Blocking = false;
+				}
+			}else
+			{
+				blockFailed = true;
+				Blocking = false;
+			}
+			
 		}
 	}
 
@@ -77,14 +105,34 @@ public class MatejController : MonoBehaviour
 	
 	IEnumerator RocketLogic()
 	{
-		var prepTime = Random.Range(1,4);
+		var prepTime = Random.Range(3,6);
 		var i = 0;
 		while (i <= prepTime)
 		{
-			Debug.Log("Time before you are fucked: " + (prepTime-i));
-			yield return new WaitForSecondsRealtime(1);
+			Debug.Log("Time before you press BLOCK: " + (prepTime-i));
+			blockCountdown.text = (prepTime-i).ToString();
+			foreach (var item in DangerSigns)
+			{
+				item.SetActive(true);
+			}
+			yield return new WaitForSecondsRealtime(0.5);
+			foreach (var item in DangerSigns)
+			{
+				item.SetActive(false);
+			}
+			yield return new WaitForSecondsRealtime(0.5);
 			i++;
 		}
+		rocketStartTime = Time.time;
+		Blocking = true;
+		blockCountdown.text = "NOW";
+		
+		
+		yield return new WaitUntil(() => blockFailed);
+
+		blockFailed = false;
+		
+		
 		
 		if(Random.Range(1,3) == 1)
 		{
@@ -95,6 +143,9 @@ public class MatejController : MonoBehaviour
 			//Right
 			Instantiate(RMissile, RRocketLauncher);
 		}
+		blockCountdown.text = "<color=red>X";
+		yield return new WaitForSecondsRealtime(1);
+		blockCountdown.text = "";
 			
 	}
 	

@@ -17,7 +17,7 @@ public class MissileScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		var step = 5f * Time.deltaTime; // calculate distance to move
+		var step = 10f * Time.deltaTime; // calculate distance to move
 		transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.transform.position.x, player.transform.position.y,player.transform.position.z), step);
 	}
 	
