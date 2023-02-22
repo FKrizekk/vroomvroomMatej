@@ -50,9 +50,46 @@ public class carEngineScript : MonoBehaviour
 		StartCoroutine(engine());
 	}
 	
-	public void RadarContact()
+	//voiceSource.PlayOneShot(clips[INDEX],gameControl.sfxVolScale * gameControl.masterVolScale);
+	//TO DEJ DO TECH FUNKCI POTOM
+	public void matejSpawn()
 	{
-		voiceSource.PlayOneShot(clips[2],gameControl.sfxVolScale * gameControl.masterVolScale);
+		
+	}
+	
+	public void matejDespawn()
+	{
+		
+	}
+	
+	public void weaponsSystemsOn()
+	{
+		
+	}
+	
+	public void weaponsSystemsOff()
+	{
+		
+	}
+	
+	public void matejLockedOn()
+	{
+		
+	}
+	
+	public void matejFiredRocket()
+	{
+		
+	}
+	
+	public void matejKilled()
+	{
+		
+	}
+	
+	public void matejCounterRocketSuccessful()
+	{
+		
 	}
 
 	public void setPitch(float wantedPitch){

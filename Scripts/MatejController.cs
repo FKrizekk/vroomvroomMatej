@@ -38,11 +38,12 @@ public class MatejController : MonoBehaviour
 	void Start()
 	{
 		StartCoroutine(MatejLoop());
+		DangerSigns = GameObject.FindGameObjectsWithTag("DangerSign");
 	}
 
 	void Update()
 	{
-		Debug.Log(health);
+		//Debug.Log(health);
 		
 		if(Input.GetKeyDown("u"))
 		{
@@ -59,6 +60,9 @@ public class MatejController : MonoBehaviour
 				if(Input.GetKeyDown("c"))
 				{
 					StopCoroutine(RocketLogic());
+					blockCountdown.text = "";
+					carEngine.matejCounterRocketSuccessful();
+					HideRockets();
 					Blocking = false;
 				}
 			}else
@@ -75,7 +79,8 @@ public class MatejController : MonoBehaviour
 		musicControl.StartAction();
 		matejActive = true;
 		Show();
-		carEngine.RadarContact();
+		//carEngine.RadarContact();
+		carEngine.matejSpawn();
 	}
 
 	void DeActivateMatej(){
@@ -84,6 +89,7 @@ public class MatejController : MonoBehaviour
 		matejActive = false;
 		HideRockets();
 		Hide();
+		carEngine.matejDespawn();
 	}
 
 	void Show(){
@@ -101,6 +107,7 @@ public class MatejController : MonoBehaviour
 	{
 		anim.SetBool("Rockets", true);
 		StartCoroutine(RocketLogic());
+		carEngine.matejLockedOn();
 	}
 	
 	IEnumerator RocketLogic()
@@ -109,18 +116,19 @@ public class MatejController : MonoBehaviour
 		var i = 0;
 		while (i <= prepTime)
 		{
-			Debug.Log("Time before you press BLOCK: " + (prepTime-i));
-			blockCountdown.text = (prepTime-i).ToString();
+			//Debug.Log("Time before you press BLOCK: " + (prepTime-i));
+			
 			foreach (var item in DangerSigns)
 			{
 				item.SetActive(true);
 			}
-			yield return new WaitForSecondsRealtime(0.5);
+			yield return new WaitForSecondsRealtime(0.5f);
 			foreach (var item in DangerSigns)
 			{
 				item.SetActive(false);
 			}
-			yield return new WaitForSecondsRealtime(0.5);
+			yield return new WaitForSecondsRealtime(0.5f);
+			blockCountdown.text = (prepTime-i+1).ToString();
 			i++;
 		}
 		rocketStartTime = Time.time;
@@ -144,6 +152,7 @@ public class MatejController : MonoBehaviour
 			Instantiate(RMissile, RRocketLauncher);
 		}
 		blockCountdown.text = "<color=red>X";
+		carEngine.matejFiredRocket();
 		yield return new WaitForSecondsRealtime(1);
 		blockCountdown.text = "";
 			
@@ -167,7 +176,7 @@ public class MatejController : MonoBehaviour
 		yield return new WaitUntil(() => Vector3.Distance(player.transform.position, transform.position) < 15);
 		
 		var a = Random.Range(0,25);
-		Debug.Log("Deploy random num: " + a);
+		//Debug.Log("Deploy random num: " + a);
 		if(a > 5)
 		{
 			Debug.Log("Deploying");
