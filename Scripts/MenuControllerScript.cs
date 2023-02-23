@@ -13,12 +13,15 @@ public class MenuControllerScript : MonoBehaviour
 	public GameControllerScript gameController;
 
 	public Animator canvasAnim;
+	
+	public GameObject SavingParent;
 
 	//Sliders
 	public Slider masterSlider;
 	public Slider sfxSlider;
 	public Slider musicSlider;
 	public Slider sensSlider;
+	public Slider dialogSlider;
 
 	public bool menuOpened = false;
 
@@ -50,6 +53,17 @@ public class MenuControllerScript : MonoBehaviour
 			Cursor.visible = false;
 			UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 		}
+		
+		StartCoroutine(Saver());
+	}
+	
+	IEnumerator Saver()
+	{
+		yield return new WaitForSeconds(4*60);
+		Save();
+		
+		
+		StartCoroutine(Saver());
 	}
 
 	public void StartMainMenu(){
@@ -124,6 +138,7 @@ public class MenuControllerScript : MonoBehaviour
 		sfxSlider.GetComponent<Slider>().value = gameController.sfxVolScale;
 		musicSlider.GetComponent<Slider>().value = gameController.musicVolScale;
 		masterSlider.GetComponent<Slider>().value = gameController.masterVolScale;
+		dialogSlider.GetComponent<Slider>().value = gameController.dialogVolScale;
 		sensSlider.GetComponent<Slider>().value = gameController.sensitivity / 100;
 	}
 
@@ -134,10 +149,7 @@ public class MenuControllerScript : MonoBehaviour
 
 	public void ApplySettings(){
 		PlayPressSound();
-		PlayerPrefs.SetFloat("sfxVolScale", sfxSlider.GetComponent<Slider>().value);
-		PlayerPrefs.SetFloat("musicVolScale", musicSlider.GetComponent<Slider>().value);
-		PlayerPrefs.SetFloat("masterVolScale", masterSlider.GetComponent<Slider>().value);
-		PlayerPrefs.SetFloat("sensitivity", sensSlider.GetComponent<Slider>().value);
+		Save();
 		gameController.UpdateVars();
 	}
 	
@@ -147,6 +159,11 @@ public class MenuControllerScript : MonoBehaviour
 		PlayerPrefs.SetFloat("musicVolScale", musicSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("masterVolScale", masterSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("sensitivity", sensSlider.GetComponent<Slider>().value);
+		PlayerPrefs.SetFloat("dialogVolScale", dialogSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetString("objectivesStatus", GameControllerScript.objectivesStatus);
+		PlayerPrefs.SetInt("matejHealth", MatejController.health);
+		PlayerPrefs.SetInt("playerHealth", PlayerScript.health);
+		PlayerPrefs.SetInt("playerCarHealth", PlayerScript.carHealth);
+		SavingParent.SetActive(true);
 	}
 }

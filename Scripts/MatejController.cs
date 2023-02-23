@@ -19,6 +19,8 @@ public class MatejController : MonoBehaviour
 	
 	public GameObject player;
 	
+	public GameControllerScript gameControl;
+	
 	public GameObject LMissile;
 	public GameObject RMissile;
 	
@@ -29,28 +31,47 @@ public class MatejController : MonoBehaviour
 	
 	public GameObject[] DangerSigns;
 	
+	public AudioSource source;
+	
+	public AudioClip[] clips;
+	
 	float rocketStartTime;
 	
 	private bool Blocking = false;
 	
 	private bool blockFailed = false;
+	
+	public bool notHitYet = true;
+	
+	bool active = false;
 
 	void Start()
 	{
 		StartCoroutine(MatejLoop());
 		DangerSigns = GameObject.FindGameObjectsWithTag("DangerSign");
+		foreach (var item in DangerSigns)
+		{
+			item.SetActive(false);
+		}
 	}
 
 	void Update()
 	{
-		//Debug.Log(health);
+		//Debug.Log("Matej health: " + health);
+		
+		RaycastHit hit;
+		if (Physics.Raycast(transform.position, Vector3.up, out hit, 10000))
+		{
+			if(hit.collider.gameObject.tag == "Terrain")
+			{
+				transform.position = new Vector3(transform.position.x,transform.position.y+50,transform.position.z);
+			}
+		}
 		
 		if(Input.GetKeyDown("u"))
 		{
-			anim.SetBool("Rockets", true);
-		}else if(Input.GetKeyDown("i"))
-		{
-			anim.SetBool("Rockets", false);
+			//DEBUG HEALTH RESET
+			health = 10000;
 		}
 		
 		if(Blocking)
@@ -72,6 +93,18 @@ public class MatejController : MonoBehaviour
 			}
 			
 		}
+		
+		if(transform.position.y < 50)
+		{
+			transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 100);
+			GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+		}
+		
+		if(transform.position.x > 10000 || transform.position.x < -1000 || transform.position.z > 10000 || transform.position.z < -10000)
+		{
+			transform.position = new Vector3(200,100,200);
+			GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+		}
 	}
 
 	void ActivateMatej(){
@@ -81,6 +114,7 @@ public class MatejController : MonoBehaviour
 		Show();
 		//carEngine.RadarContact();
 		carEngine.matejSpawn();
+		active = true;
 	}
 
 	void DeActivateMatej(){
@@ -89,7 +123,8 @@ public class MatejController : MonoBehaviour
 		matejActive = false;
 		HideRockets();
 		Hide();
-		carEngine.matejDespawn();
+		carEngine.matejKilled();
+		active = false;
 	}
 
 	void Show(){
@@ -122,13 +157,13 @@ public class MatejController : MonoBehaviour
 			{
 				item.SetActive(true);
 			}
-			yield return new WaitForSecondsRealtime(0.5f);
+			yield return new WaitForSeconds(0.5f);
 			foreach (var item in DangerSigns)
 			{
 				item.SetActive(false);
 			}
-			yield return new WaitForSecondsRealtime(0.5f);
-			blockCountdown.text = (prepTime-i+1).ToString();
+			yield return new WaitForSeconds(0.5f);
+			blockCountdown.text = (prepTime-i).ToString();
 			i++;
 		}
 		rocketStartTime = Time.time;
@@ -152,7 +187,7 @@ public class MatejController : MonoBehaviour
 			Instantiate(RMissile, RRocketLauncher);
 		}
 		blockCountdown.text = "<color=red>X";
-		carEngine.matejFiredRocket();
+		//carEngine.matejFiredRocket();
 		yield return new WaitForSecondsRealtime(1);
 		blockCountdown.text = "";
 			
@@ -169,6 +204,8 @@ public class MatejController : MonoBehaviour
 		yield return new WaitForSeconds(Random.Range(10, 30));
 		yield return new WaitUntil(() => PlayerMovement.canMove == true);
 		ActivateMatej();
+		StartCoroutine(MatejSoundLoop());
+		notHitYet = true;
 		//---------------------ACTIVATED-----------------------------------------
 		var startTime = Time.time;
 		var startHealth = health;
@@ -180,6 +217,10 @@ public class MatejController : MonoBehaviour
 		if(a > 5)
 		{
 			Debug.Log("Deploying");
+			if(Random.Range(0,25) > 17)
+			{
+				matejRocketsDeployed();
+			}
 			DeployRockets();
 		}else
 		{
@@ -195,7 +236,42 @@ public class MatejController : MonoBehaviour
 		}
 		//---------------------DEACTIVATED-----------------------------------------
 		DeActivateMatej();
+		StopCoroutine(MatejSoundLoop());
 
 		StartCoroutine(MatejLoop());
+	}
+	
+	IEnumerator MatejSoundLoop()
+	{
+		yield return new WaitForSeconds(20);
+		if(active)
+		{
+			matejRandomHlaska();
+		}
+		StartCoroutine(MatejSoundLoop());
+	}
+	
+	void matejRandomHlaska()
+	{
+		source.PlayOneShot(clips[0 + Random.Range(0,4)],gameControl.dialogVolScale * gameControl.masterVolScale);
+	}
+	
+	public void matejOnGotHit()
+	{
+		if(notHitYet)
+		{
+			notHitYet = false;
+			source.PlayOneShot(clips[0 + Random.Range(15,20)],gameControl.dialogVolScale * gameControl.masterVolScale);
+		}
+	}
+	
+	void matejRocketsDeployed()
+	{
+		source.PlayOneShot(clips[21],gameControl.dialogVolScale * gameControl.masterVolScale);
+	}
+	
+	void matejLaugh()
+	{
+		source.PlayOneShot(clips[22],gameControl.dialogVolScale * gameControl.masterVolScale);
 	}
 }

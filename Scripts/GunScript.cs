@@ -14,6 +14,8 @@ public class GunScript : MonoBehaviour
 	public AudioControllerScript audio;
 	public GameControllerScript gameController;
 	
+	public MatejController matejControl;
+	
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -27,18 +29,19 @@ public class GunScript : MonoBehaviour
 		switch (weaponsSystemsScript.currentWeaponLvl)
 		{
 			case 1:
-				audio.PlaySound(2, gameController.sfxVolScale);
+				audio.PlaySound(2, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(shootPoint.position, shootPoint.forward*20);
 				if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, 20,layerMask))
 				{
 					if(hit.collider.gameObject.tag == "Car" && MatejController.matejActive){
 						MatejController.health = MatejController.health-10;
+						matejControl.matejOnGotHit();
 					}
 				}
 				break;
 			case 2:
-				audio.PlaySound(2, gameController.sfxVolScale);
+				audio.PlaySound(2, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(shootPoint.position, shootPoint.forward*20);
 				if (Physics.Raycast(shootPoint.position, shootPoint.forward, out hit, 20,layerMask))

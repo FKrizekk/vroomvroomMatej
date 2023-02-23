@@ -9,6 +9,7 @@ public class GameControllerScript : MonoBehaviour
 	public float musicVolScale;
 	public float masterVolScale;
 	public float sensitivity;
+	public float dialogVolScale;
 
 	//Progress
 	public ObjectiveScript objScript;
@@ -48,6 +49,14 @@ public class GameControllerScript : MonoBehaviour
 		sensitivity = PlayerPrefs.GetFloat("sensitivity", 0.4f) * 100;
 		objIndex = PlayerPrefs.GetInt("objIndex", 400);
 		objectivesStatus = PlayerPrefs.GetString("objectivesStatus", new string('E',objectivesRemaining.Length));
+		MatejController.health = PlayerPrefs.GetInt("matejHealth", 10000);
+		PlayerScript.health = PlayerPrefs.GetInt("playerHealth", 100);
+		PlayerScript.carHealth = PlayerPrefs.GetInt("playerCarHealth", 1000);
+		dialogVolScale = PlayerPrefs.GetFloat("dialogVolScale", 0.4f);
+		
+		
+		Debug.Log("---------------LOADED---------------\n" + "sfxVolScale: " + sfxVolScale + "\nmusicVolScale: " + musicVolScale + "\nmasterVolScale: " + masterVolScale + "\ndialogVolScale: " + dialogVolScale + "\nsensitivity: " + sensitivity + "\nobjIndex: " + objIndex + "\nobjectivesStatus: " + objectivesStatus + "\nMatejHealth: " + MatejController.health + "\nPlayerHealth: " + PlayerScript.health  + "\nPlayerCarHealth: " + PlayerScript.carHealth);
+		
 		if(objectivesStatus.Length < objectivesRemaining.Length)
 		{
 			objectivesStatus = objectivesStatus + new string('E',objectivesRemaining.Length-objectivesStatus.Length);

@@ -81,7 +81,7 @@ public class NPCScript : MonoBehaviour
 		foreach (var line in lines)
 		{
 			subtitlesText.text = name + ": " + line;
-			source.PlayOneShot(clips[i],gameControl.sfxVolScale*gameControl.masterVolScale);
+			source.PlayOneShot(clips[i],gameControl.dialogVolScale*gameControl.masterVolScale);
 			yield return new WaitForSecondsRealtime(clips[i].length);
 			yield return new WaitUntil(() => Input.GetKeyDown("space"));
 			i++;

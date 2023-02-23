@@ -5,6 +5,10 @@ using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
+	public static int health = 100;
+	
+	public static int carHealth = 1000;
+	
 
 	public GameObject car;
 	public GameObject PlayerCamera;
@@ -14,6 +18,8 @@ public class PlayerScript : MonoBehaviour
 	public GameObject gunScreen;
 	public GameObject screenCanvas;
 	public GameObject gunScreenCanvas;
+	
+	public InventoryScript invScript;
 
 	public AudioControllerScript cameraAudio;
 
@@ -21,6 +27,7 @@ public class PlayerScript : MonoBehaviour
 	
 	bool canGetIn = false;
 	bool canTalk = false;
+	bool canPickUp = false;
 	public bool isInCar = false;
 	public bool isGunning = false;
 	
@@ -32,6 +39,11 @@ public class PlayerScript : MonoBehaviour
 	
 	public Animator mapPanelAnim;
 	
+	public carEngineScript carEngine;
+	
+	public Animator invAnim;
+	
+	bool InventoryOpen = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -42,6 +54,44 @@ public class PlayerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if(Input.GetKeyDown("r"))
+		{
+			invScript.AddItem("Gold bars", 0, 1);
+		}
+		
+		if(Input.GetKeyDown("y"))
+		{
+			invScript.RemoveItem("Gold bars", 1);
+		}
+		
+		if(Input.GetKeyDown("v"))
+		{
+			invScript.AddItem("Kuřecí řízek", 1, 1);
+		}
+		
+		if(Input.GetKeyDown("b"))
+		{
+			invScript.RemoveItem("Kuřecí řízek", 1);
+		}
+		
+		if(Input.GetKeyDown("i"))
+		{
+			if(InventoryOpen)
+			{
+				InventoryOpen = false;
+				invAnim.SetBool("ShowInventory", false);
+			}else
+			{
+				InventoryOpen = true;
+				invAnim.SetBool("ShowInventory", true);
+			}
+		}
+		
+		
+		
+		
+		
+		
 		if(isGunning)
 		{
 			gunCameraScript.active = true;
@@ -52,10 +102,12 @@ public class PlayerScript : MonoBehaviour
 			cameraScript.active = true;
 		}
 		
+		
 		if(!isInCar){
 			RaycastHit hit;
 			if (Physics.Raycast(PlayerCamera.transform.position, (PlayerCamera.transform.forward + PlayerCamera.transform.position) - PlayerCamera.transform.position, out hit, 8,layerMask))
 			{
+				
 				//Debug.Log(hit.collider.gameObject.name);
 				if(hit.collider.gameObject.name == "Ferrari Testarossa"){
 					canGetIn = true;
@@ -64,21 +116,43 @@ public class PlayerScript : MonoBehaviour
 					canTalk = true;
 					lookingAt = hit.collider.gameObject.name;
 					canGetIn = false;
+				}else if(hit.collider.gameObject.name.Contains("PCKPBL"))
+				{
+					canPickUp = true;
 				}else{
 					canGetIn = false;
 					canTalk = false;
+					canPickUp = false;
 					interactText.text = "";
 				}
 			}else{
 				canGetIn = false;
 				canTalk = false;
+				canPickUp = false;
 				interactText.text = "";
 			}
+			
 
 			if(canTalk){
 				interactText.text = "Press 'E' to interact with " + lookingAt;
 				if(Input.GetKeyDown("e")){
 					hit.collider.gameObject.GetComponent<NPCScript>().Talk();
+				}
+			}
+			
+			if(canPickUp)
+			{
+				interactText.text = "Press 'E' to pickup " + hit.collider.gameObject.tag;
+				if(Input.GetKeyDown("e"))
+				{
+					
+					Destroy(hit.collider.gameObject);
+					switch (hit.collider.gameObject.tag)
+					{
+						case "Gold bars":
+							invScript.AddItem(hit.collider.gameObject.tag, 0, 1);
+							break;
+					}
 				}
 			}
 			
@@ -91,7 +165,11 @@ public class PlayerScript : MonoBehaviour
 			if(Input.GetKeyDown("e")){
 				car.GetComponent<SimpleCarController>().engine.setPitch(1f);
 				GetOut();
-				DisableWeapons();
+				isGunning = false;
+				screen.GetComponent<MeshRenderer>().enabled = true;
+				screenCanvas.SetActive(true);
+				gunScreen.GetComponent<MeshRenderer>().enabled = false;
+				gunScreenCanvas.SetActive(false);
 			}
 			
 			//Weapon systems toggle
@@ -135,6 +213,7 @@ public class PlayerScript : MonoBehaviour
 		screenCanvas.SetActive(false);
 		gunScreen.GetComponent<MeshRenderer>().enabled = true;
 		gunScreenCanvas.SetActive(true);
+		carEngine.weaponsSystemsOn();
 	}
 	
 	void DisableWeapons()
@@ -144,6 +223,7 @@ public class PlayerScript : MonoBehaviour
 		screenCanvas.SetActive(true);
 		gunScreen.GetComponent<MeshRenderer>().enabled = false;
 		gunScreenCanvas.SetActive(false);
+		carEngine.weaponsSystemsOff();
 	}
 	
 	void ShowMap()
@@ -177,7 +257,7 @@ public class PlayerScript : MonoBehaviour
 		canGetIn = false;
 		//Debug.Log("is in car");
 		GetComponent<MeshRenderer>().enabled = false;
-		GetComponent<CapsuleCollider>().enabled = !GetComponent<CapsuleCollider>().enabled;
+		GetComponent<CapsuleCollider>().isTrigger = true;
 		GetComponent<CharacterController>().enabled = !GetComponent<CharacterController>().enabled;
 		car.GetComponent<SimpleCarController>().enabled = true;
 		transform.SetParent(car.transform,false);
@@ -198,10 +278,10 @@ public class PlayerScript : MonoBehaviour
 		PlayerCamera.transform.localRotation = Quaternion.Euler(0,0,0);
 		transform.position = new Vector3(carPos.x-2,carPos.y+2,carPos.z+3);
 		transform.eulerAngles = new Vector3(0,car.transform.eulerAngles.y,0);
-		GetComponent<CapsuleCollider>().enabled = true;
+		GetComponent<CapsuleCollider>().isTrigger = false;
 		GetComponent<CharacterController>().enabled = true;
 		car.GetComponent<SimpleCarController>().enabled = false;
 		car.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
-		car.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
+		car.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
 	}
 }
