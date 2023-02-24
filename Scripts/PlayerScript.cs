@@ -44,6 +44,10 @@ public class PlayerScript : MonoBehaviour
 	public Animator invAnim;
 	
 	bool InventoryOpen = false;
+	
+	bool notYetHighlighted = true;
+	
+	RaycastHit lastHit;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -105,6 +109,7 @@ public class PlayerScript : MonoBehaviour
 		
 		if(!isInCar){
 			RaycastHit hit;
+			
 			if (Physics.Raycast(PlayerCamera.transform.position, (PlayerCamera.transform.forward + PlayerCamera.transform.position) - PlayerCamera.transform.position, out hit, 8,layerMask))
 			{
 				
@@ -112,13 +117,17 @@ public class PlayerScript : MonoBehaviour
 				if(hit.collider.gameObject.name == "Ferrari Testarossa"){
 					canGetIn = true;
 					canTalk = false;
+					canPickUp = false;
 				}else if(hit.collider.gameObject.tag == "NPC"){
 					canTalk = true;
 					lookingAt = hit.collider.gameObject.name;
 					canGetIn = false;
+					canPickUp = false;
 				}else if(hit.collider.gameObject.name.Contains("PCKPBL"))
 				{
 					canPickUp = true;
+					canGetIn = false;
+					canTalk = false;
 				}else{
 					canGetIn = false;
 					canTalk = false;
@@ -132,6 +141,8 @@ public class PlayerScript : MonoBehaviour
 				interactText.text = "";
 			}
 			
+			
+			
 
 			if(canTalk){
 				interactText.text = "Press 'E' to interact with " + lookingAt;
@@ -142,6 +153,16 @@ public class PlayerScript : MonoBehaviour
 			
 			if(canPickUp)
 			{
+				
+				if(notYetHighlighted)
+				{
+					RaycastHit lastHit;
+					
+					notYetHighlighted = false;
+					hit.collider.gameObject.GetComponent<Highlight>().ToggleHighlight(true);
+					//Debug.Log("Highlight");
+				}
+				lastHit = hit;
 				interactText.text = "Press 'E' to pickup " + hit.collider.gameObject.tag;
 				if(Input.GetKeyDown("e"))
 				{
@@ -153,6 +174,14 @@ public class PlayerScript : MonoBehaviour
 							invScript.AddItem(hit.collider.gameObject.tag, 0, 1);
 							break;
 					}
+				}
+			}else
+			{
+				if(!notYetHighlighted)
+				{
+					notYetHighlighted = true;
+					lastHit.collider.gameObject.GetComponent<Highlight>().ToggleHighlight(false);
+					//Debug.Log("Unhighlight");
 				}
 			}
 			
