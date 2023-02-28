@@ -33,7 +33,7 @@ public class MatejMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(player.transform.position,transform.position) > 10){
+        if(Vector3.Distance(player.transform.position,transform.position) > 4){
             safetyOn2 = true;
         }else{
             safetyOn2 = false;

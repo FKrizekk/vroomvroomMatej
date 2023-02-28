@@ -13,7 +13,9 @@ public class NPCScript : MonoBehaviour
 	
 	public AudioSource source;
 	
-	public AudioClip[] clips;
+	AudioClip[] clips;
+	
+	public InventoryScript invScript;
 	
 	
 	
@@ -23,7 +25,9 @@ public class NPCScript : MonoBehaviour
 	//AC = Quest acquire
 	//BF = Return before finish
 	//F = Finishing
+	//C = DONE
 
+	//PEPA
 	string[] Pepa_linesAC = new string[] {
 		"Čauu, hej kámo jestli mi přineseš můj kuřecí řízek, který jsem si náhodou zapomněl, tak bych ti jako možná i něco dal, hele.", 
 		"Díííík."};
@@ -32,10 +36,13 @@ public class NPCScript : MonoBehaviour
 		"Než ho budeš mít, tak se NEVRACEJ!!"};
 	string[] Pepa_linesF = new string[] {
 		"Kámooo dík moc, fakt jsem nevěřil že ho ještě někdy uvidím. Tady máš moje životní úspory."};
+	string[] Pepa_linesC = new string[] {
+		"Děkuji ti ale už nic nepotřebuju."};
 	
 	public AudioClip[] Pepa_clipsAC;
 	public AudioClip[] Pepa_clipsBF;
 	public AudioClip[] Pepa_clipsF;
+	public AudioClip[] Pepa_clipsC;
 
 	public void Talk(){
 		PlayerMovement.canMove = false;
@@ -73,6 +80,13 @@ public class NPCScript : MonoBehaviour
 					//QUEST COMPLETED
 					lines = Pepa_linesF;
 					clips = Pepa_clipsF;
+					invScript.AddItem("Gold bars",0,10);
+					objectivesStatus[currentStatusIndex] = 'C'; //Setne pres Index assignuti objectivu do temp. listu
+					GameControllerScript.objectivesStatus = new string(objectivesStatus);
+				}else if(objectivesStatus[currentStatusIndex] == 'C')
+				{
+					lines = Pepa_linesC;
+					clips = Pepa_clipsC;
 				}
 				
 				break;

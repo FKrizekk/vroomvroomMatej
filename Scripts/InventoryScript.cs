@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 public class InventoryScript : MonoBehaviour
 {
@@ -12,10 +13,43 @@ public class InventoryScript : MonoBehaviour
 	
 	public List<GameObject> itemObjects = new List<GameObject>();
 	public Dictionary<GameObject, int> itemsHash = new Dictionary<GameObject, int>();
-	// Start is called before the first frame update
-	void Start()
+	
+	Dictionary<string, int> nameSpriteIndexDict = new Dictionary<string, int>
 	{
-		
+		{"Gold bars", 0},
+		{"Kuřecí řízek", 1}
+	};
+	
+	public void UpdateInventory()
+	{
+		var list = GameControllerScript.inventory.Split(',');
+		foreach(var item in list)
+		{
+			Debug.Log("LOADED INV ITEM AS: " + item);
+			string name = item.Split('-')[0];
+			int spriteIndex = int.Parse(item.Split('-')[1]);
+			int amount = int.Parse(item.Split('-')[2]);
+			
+			AddItem(name, spriteIndex, amount);
+		}
+	}
+	
+	public void SaveInventory()
+	{
+		string inv = "";
+		foreach(var key in itemsHash.Keys)
+		{
+			var tempName = key.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text;
+			if(key != new List<GameObject>(this.itemsHash.Keys).Last())
+			{
+				inv = inv+tempName+"-"+nameSpriteIndexDict[tempName].ToString()+"-"+itemsHash[key].ToString()+",";
+			}else
+			{
+				inv = inv+tempName+"-"+nameSpriteIndexDict[tempName].ToString()+"-"+itemsHash[key].ToString();
+			}
+		}
+		PlayerPrefs.SetString("inventory", inv);
+		Debug.Log("SAVED INVENTORY AS: " + inv);
 	}
 
 	// Update is called once per frame
@@ -43,6 +77,8 @@ public class InventoryScript : MonoBehaviour
 				exit = false;
 			}
 		}
+		
+		
 		
 		if(!exit){
 			var spawnedObject = Instantiate(ItemPrefab, gameObject.transform);

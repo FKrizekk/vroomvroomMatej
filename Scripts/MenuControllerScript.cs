@@ -15,6 +15,8 @@ public class MenuControllerScript : MonoBehaviour
 	public Animator canvasAnim;
 	
 	public GameObject SavingParent;
+	
+	public InventoryScript inventoryScript;
 
 	//Sliders
 	public Slider masterSlider;
@@ -22,6 +24,12 @@ public class MenuControllerScript : MonoBehaviour
 	public Slider musicSlider;
 	public Slider sensSlider;
 	public Slider dialogSlider;
+	
+	public Slider antiAliasingSlider;
+	
+	//Toggles
+	public Toggle vsyncToggle;
+	public Toggle anisotropicFilteringToggle;
 
 	public bool menuOpened = false;
 
@@ -140,6 +148,9 @@ public class MenuControllerScript : MonoBehaviour
 		masterSlider.GetComponent<Slider>().value = gameController.masterVolScale;
 		dialogSlider.GetComponent<Slider>().value = gameController.dialogVolScale;
 		sensSlider.GetComponent<Slider>().value = gameController.sensitivity / 100;
+		vsyncToggle.isOn = gameController.vsync;
+		antiAliasingSlider.GetComponent<Slider>().value = gameController.antiAliasing;
+		anisotropicFilteringToggle.isOn = gameController.anisotropicFiltering;
 	}
 
 	public void CloseSettings(){
@@ -155,6 +166,10 @@ public class MenuControllerScript : MonoBehaviour
 	
 	public void Save()
 	{
+		if(SceneManager.GetActiveScene().name == "MainScene")
+		{
+			SavingParent.SetActive(true);
+		}
 		PlayerPrefs.SetFloat("sfxVolScale", sfxSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("musicVolScale", musicSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("masterVolScale", masterSlider.GetComponent<Slider>().value);
@@ -164,6 +179,31 @@ public class MenuControllerScript : MonoBehaviour
 		PlayerPrefs.SetInt("matejHealth", MatejController.health);
 		PlayerPrefs.SetInt("playerHealth", PlayerScript.health);
 		PlayerPrefs.SetInt("playerCarHealth", PlayerScript.carHealth);
-		SavingParent.SetActive(true);
+		if(SceneManager.GetActiveScene().name == "MainScene")
+		{
+			inventoryScript.SaveInventory();
+		}
+		if(vsyncToggle.isOn)
+		{
+			PlayerPrefs.SetInt("vsync", 1);
+		}else
+		{
+			PlayerPrefs.SetInt("vsync", 0);
+		}
+		
+		if(antiAliasingSlider.GetComponent<Slider>().value != 3)
+		{
+			PlayerPrefs.SetInt("antiAliasing", (int)antiAliasingSlider.GetComponent<Slider>().value*2);
+		}else
+		{
+			PlayerPrefs.SetInt("antiAliasing", 8);
+		}
+		if(anisotropicFilteringToggle.isOn)
+		{
+			PlayerPrefs.SetInt("anisotropicFiltering", 1);
+		}else
+		{
+			PlayerPrefs.SetInt("anisotropicFiltering", 0);
+		}
 	}
 }

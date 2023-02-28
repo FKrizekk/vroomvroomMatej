@@ -36,8 +36,8 @@ public class carEngineScript : MonoBehaviour
 		
 		yield return new WaitUntil(() => Vector3.Distance(player.transform.position,transform.position) < 20);
 		//Powering up
-		source.pitch = 1;
-		pitch = 1;
+		source.pitch = 0.5f;
+		pitch = 0.5f;
 		source.Stop();
 		source.PlayOneShot(clips[1],gameControl.sfxVolScale * gameControl.masterVolScale);
 		voiceSource.PlayOneShot(clips[0],gameControl.sfxVolScale * gameControl.masterVolScale);

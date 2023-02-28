@@ -44,15 +44,45 @@ public class MatejController : MonoBehaviour
 	public bool notHitYet = true;
 	
 	bool active = false;
+	
+	bool axeLogicEnded = false;
+	
+	public AudioSource axeSource;
+	
+	bool rocketLogicEnded = false;
+	
+	int axeTries = 3;
+	int	axeCTries = 0;
 
+
+	GameObject playercar;
+	
 	void Start()
 	{
 		StartCoroutine(MatejLoop());
+		RefreshVars();
+	}
+	
+	public void RefreshVars()
+	{
+		GameObject[] gameObjects = FindObjectsOfType<GameObject>();
+	
+		for (var i=0; i < gameObjects.Length; i++){
+			if(gameObjects[i].name.Contains("PlayerCar")){
+				playercar = gameObjects[i];
+			}
+		}
+		
+		carEngine = playercar.GetComponent<carEngineScript>();
+		PlayerScript.RefreshVars(playercar.name);
 		DangerSigns = GameObject.FindGameObjectsWithTag("DangerSign");
 		foreach (var item in DangerSigns)
 		{
 			item.SetActive(false);
 		}
+		blockCountdown = playercar.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<TMP_Text>();
+		GunScreenScript.RefreshVars(playercar.transform.GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetComponent<Camera>());
+		
 	}
 
 	void Update()
@@ -81,6 +111,7 @@ public class MatejController : MonoBehaviour
 				if(Input.GetKeyDown("c"))
 				{
 					StopCoroutine(RocketLogic());
+					rocketLogicEnded = true;
 					blockCountdown.text = "";
 					carEngine.matejCounterRocketSuccessful();
 					HideRockets();
@@ -90,6 +121,7 @@ public class MatejController : MonoBehaviour
 			{
 				blockFailed = true;
 				Blocking = false;
+				HideRockets();
 			}
 			
 		}
@@ -98,12 +130,14 @@ public class MatejController : MonoBehaviour
 		{
 			transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 100);
 			GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 		}
 		
 		if(transform.position.x > 10000 || transform.position.x < -1000 || transform.position.z > 10000 || transform.position.z < -10000)
 		{
-			transform.position = new Vector3(200,100,200);
+			transform.position = new Vector3(600,100,600);
 			GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 		}
 	}
 
@@ -137,6 +171,8 @@ public class MatejController : MonoBehaviour
 		anim.SetBool("Show", false);
 		anim.SetBool("Hide", true);
 	}
+	
+	//ROCKETS//
 	
 	void DeployRockets()
 	{
@@ -190,6 +226,7 @@ public class MatejController : MonoBehaviour
 		//carEngine.matejFiredRocket();
 		yield return new WaitForSecondsRealtime(1);
 		blockCountdown.text = "";
+		rocketLogicEnded = true;
 			
 	}
 	
@@ -197,6 +234,32 @@ public class MatejController : MonoBehaviour
 	{
 		anim.SetBool("Rockets", false);
 	}
+	
+	//AXE//
+	IEnumerator AxeLogic()
+	{
+		yield return new WaitUntil(() => Vector3.Distance(player.transform.position, transform.position) < 5);
+		if(axeTries > axeCTries)
+		{
+			if(Vector3.Distance(player.transform.position, transform.position) < 5)
+			{
+				anim.SetBool("AxeAttack", true);
+				axeCTries++;
+				yield return new WaitForSeconds(1.5f);
+				StartCoroutine(AxeLogic());
+				yield return null;
+			}else
+			{
+				anim.SetBool("AxeAttack", false);
+				yield return null;
+			}
+		}else{
+			anim.SetBool("AxeAttack", false);
+			axeLogicEnded = true;
+			yield return null;
+		}
+	}
+
 
 
 	IEnumerator MatejLoop(){
@@ -210,7 +273,7 @@ public class MatejController : MonoBehaviour
 		var startTime = Time.time;
 		var startHealth = health;
 		
-		yield return new WaitUntil(() => Vector3.Distance(player.transform.position, transform.position) < 15);
+		yield return new WaitUntil(() => Vector3.Distance(player.transform.position, transform.position) < 30);
 		
 		var a = Random.Range(0,25);
 		//Debug.Log("Deploy random num: " + a);
@@ -225,7 +288,34 @@ public class MatejController : MonoBehaviour
 		}else
 		{
 			Debug.Log("NOT Deploying");
+			rocketLogicEnded = true;
 		}
+		
+		if(health>5000)
+		{
+			yield return new WaitUntil(() => health < startHealth-100 || Time.time - startTime > 360 || rocketLogicEnded);
+		}else
+		{
+			yield return new WaitUntil(() => health < startHealth-30 || Time.time - startTime > 30 || rocketLogicEnded);
+		}
+		rocketLogicEnded = false;
+		Debug.Log("ROCKET LOGIC ENDED");
+		
+		axeTries = 5;
+		axeCTries = 0;
+		StartCoroutine(AxeLogic());
+		Debug.Log("AXE LOGIC STARTED");
+		
+		if(health>5000)
+		{
+			yield return new WaitUntil(() => health < startHealth-100 || Time.time - startTime > 360 || axeLogicEnded);
+		}else
+		{
+			yield return new WaitUntil(() => health < startHealth-30 || Time.time - startTime > 30 || axeLogicEnded);
+		}
+		axeLogicEnded = false;
+		matejLaugh();
+		Debug.Log("AXE LOGIC ENDED");
 		
 		if(health>5000)
 		{
@@ -234,12 +324,17 @@ public class MatejController : MonoBehaviour
 		{
 			yield return new WaitUntil(() => health < startHealth-30 || Time.time - startTime > 30);
 		}
+		
 		//---------------------DEACTIVATED-----------------------------------------
 		DeActivateMatej();
 		StopCoroutine(MatejSoundLoop());
 
 		StartCoroutine(MatejLoop());
 	}
+	
+	
+	
+	//SOUNDS//
 	
 	IEnumerator MatejSoundLoop()
 	{
@@ -273,5 +368,10 @@ public class MatejController : MonoBehaviour
 	void matejLaugh()
 	{
 		source.PlayOneShot(clips[22],gameControl.dialogVolScale * gameControl.masterVolScale);
+	}
+	
+	public void AxeSound()
+	{
+		axeSource.PlayOneShot(axeSource.clip,gameControl.sfxVolScale*gameControl.masterVolScale);
 	}
 }

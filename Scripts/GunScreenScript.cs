@@ -6,7 +6,9 @@ public class GunScreenScript : MonoBehaviour
 {
 	public Material mat;
 	
-	public Camera cam;
+	public static Camera cam;
+	
+	public static bool READY = false;
 	
 	// Take a "screenshot" of a camera's Render Texture.
 	Texture2D RTImage(Camera camera)
@@ -29,6 +31,12 @@ public class GunScreenScript : MonoBehaviour
 		return image;
 	}
 	
+	public static void RefreshVars(Camera CAM)
+	{
+		cam = CAM;
+		READY = true;
+	}
+	
 	void Start()
 	{
 		StartCoroutine(Display());
@@ -36,7 +44,10 @@ public class GunScreenScript : MonoBehaviour
 	
 	IEnumerator Display()
 	{
-		mat.mainTexture = RTImage(cam);
+		if(READY)
+		{
+			mat.mainTexture = RTImage(cam);
+		}
 		yield return new WaitForSeconds(Time.deltaTime);
 		StartCoroutine(Display());
 	}

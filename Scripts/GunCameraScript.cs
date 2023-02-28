@@ -32,7 +32,25 @@ public class GunCameraScript : MonoBehaviour
 	{
 		if(active){
 			if(PlayerMovement.canMove){
-				Vector3 offset = new Vector3 (-0.2f, 0.75f, 0f);
+				Vector3 offset = new Vector3(0,0,0);
+				switch (int.Parse(transform.parent.parent.name.Split("_")[2]))
+				{
+					case 1:
+						offset = new Vector3 (-0.2f, 0.75f, 0f);
+						break;
+					case 2:
+						offset = new Vector3 (-0.2f, 0.75f, 0f);
+						break;
+					case 3:
+						offset = new Vector3 (0f, 0.75f, 0f);
+						break;
+					case 4:
+						offset = new Vector3 (0f, 1f, 0f);
+						break;
+					case 5:
+						offset = new Vector3 (0f, 0.75f, 0f);
+						break;
+				}
 				Vector3 wantedCameraPosition = gun.transform.rotation * offset;
 					
 				Vector3 smoothedPos = Vector3.Lerp (lastOffset, wantedCameraPosition, Time.deltaTime * PosLerpSpeed);

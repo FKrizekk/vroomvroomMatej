@@ -47,9 +47,11 @@ public class SimpleCarController : MonoBehaviour {
 
 	void Update(){
 		if(Input.GetKey("w") || Input.GetKey("s")){
-			engine.setPitch(1.7f);
+			//engine.setPitch(1.7f);
+			engine.setPitch(0.7f);
 		}else{
-			engine.setPitch(1f);
+			//engine.setPitch(1f);
+			engine.setPitch(0.5f);
 		}
 
 		if(Input.GetKey("a")){

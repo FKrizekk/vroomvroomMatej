@@ -5,19 +5,41 @@ using TMPro;
 
 public class PlayerScript : MonoBehaviour
 {
+	//---------DAMAGE VALUES------------
+	
+	//AXE MATEJ->PLAYER
+	int AxeCarDamage = 100;
+	int AxePlayerDamage = 50;
+	
+	//ROCKET MATEJ->PLAYER
+	int RocketCarDamage = 150;
+	int RocketPlayerDamage = 50;
+	
+	//GUN PLAYER->MATEJ
+	int LVL1GunDamage = 10;
+	int LVL2GunDamage = 20;
+	int LVL3GunDamage = 30;
+	int LVL4GunDamage = 40;
+	
+	
+	//---------DAMAGE VALUES------------
+	
+	
+	
+	
 	public static int health = 100;
 	
 	public static int carHealth = 1000;
 	
 
-	public GameObject car;
+	public static GameObject car;
 	public GameObject PlayerCamera;
 	public TMP_Text interactText;
 	
-	public GameObject screen;
-	public GameObject gunScreen;
-	public GameObject screenCanvas;
-	public GameObject gunScreenCanvas;
+	public static GameObject screen;
+	public static GameObject gunScreen;
+	public static GameObject screenCanvas;
+	public static GameObject gunScreenCanvas;
 	
 	public InventoryScript invScript;
 
@@ -34,12 +56,12 @@ public class PlayerScript : MonoBehaviour
 	string lookingAt = "";
 
 
-	public GunCameraScript gunCameraScript;
+	public static GunCameraScript gunCameraScript;
 	public CameraScript cameraScript;
 	
 	public Animator mapPanelAnim;
 	
-	public carEngineScript carEngine;
+	public static carEngineScript carEngine;
 	
 	public Animator invAnim;
 	
@@ -47,12 +69,38 @@ public class PlayerScript : MonoBehaviour
 	
 	bool notYetHighlighted = true;
 	
+	bool canWPNON = true;
+	bool canWPNOFF = true;
+	
 	RaycastHit lastHit;
 	// Start is called before the first frame update
 	void Start()
 	{
 		layerMask = ~layerMask;
 		DisableWeapons();
+	}
+	
+	public static void RefreshVars(string CAR)
+	{
+		car = GameObject.Find(CAR);
+		
+		screen = GameObject.Find(CAR+"/Screen");
+		gunScreen = GameObject.Find(CAR+"/GunScreen");
+		screenCanvas = GameObject.Find(CAR+"/Screen/ScreenCanvas");
+		gunScreenCanvas = GameObject.Find(CAR+"/GunScreen/ScreenCanvas");
+		
+		string lvl = CAR.Split("lvl")[1];
+		if(lvl == "4")
+		{
+			gunCameraScript = GameObject.Find("/"+CAR+"/WEAPONS PARENT/Canon_lvl_"+lvl+"/canon_lvl_"+lvl+"_var_1/GunCamera").GetComponent<GunCameraScript>();
+		}else if(lvl == "5")
+		{
+			gunCameraScript = GameObject.Find("/"+CAR+"/WEAPONS PARENT/Canon_lvl_"+lvl+"/canon_lvl_"+"4"+"_var_2/GunCamera").GetComponent<GunCameraScript>();
+		}else
+		{
+			gunCameraScript = GameObject.Find("/"+CAR+"/WEAPONS PARENT/Canon_lvl_"+lvl+"/canon_lvl_"+lvl+"/GunCamera").GetComponent<GunCameraScript>();
+		}
+		carEngine = GameObject.Find(CAR).GetComponent<carEngineScript>();
 	}
 
 	// Update is called once per frame
@@ -144,7 +192,7 @@ public class PlayerScript : MonoBehaviour
 			
 			
 
-			if(canTalk){
+			if(canTalk && PlayerMovement.canMove){
 				interactText.text = "Press 'E' to interact with " + lookingAt;
 				if(Input.GetKeyDown("e")){
 					hit.collider.gameObject.GetComponent<NPCScript>().Talk();
@@ -167,13 +215,17 @@ public class PlayerScript : MonoBehaviour
 				if(Input.GetKeyDown("e"))
 				{
 					
-					Destroy(hit.collider.gameObject);
+					
 					switch (hit.collider.gameObject.tag)
 					{
 						case "Gold bars":
 							invScript.AddItem(hit.collider.gameObject.tag, 0, 1);
 							break;
+						case "Pepa quest item":
+							hit.collider.gameObject.GetComponent<QuestItemScript>().FinishQuest(0);
+							break;
 					}
+					Destroy(hit.collider.gameObject);
 				}
 			}else
 			{
@@ -192,7 +244,7 @@ public class PlayerScript : MonoBehaviour
 			canTalk = false;
 			interactText.text = "";
 			if(Input.GetKeyDown("e")){
-				car.GetComponent<SimpleCarController>().engine.setPitch(1f);
+				car.GetComponent<SimpleCarController>().engine.setPitch(0.5f);
 				GetOut();
 				isGunning = false;
 				screen.GetComponent<MeshRenderer>().enabled = true;
@@ -242,7 +294,18 @@ public class PlayerScript : MonoBehaviour
 		screenCanvas.SetActive(false);
 		gunScreen.GetComponent<MeshRenderer>().enabled = true;
 		gunScreenCanvas.SetActive(true);
-		carEngine.weaponsSystemsOn();
+		if(canWPNON)
+		{
+			carEngine.weaponsSystemsOn();
+			canWPNON = false;
+			StartCoroutine(wpnsOnTimer());
+		}
+	}
+	
+	IEnumerator wpnsOnTimer()
+	{
+		yield return new WaitForSeconds(carEngine.clips[4].length);
+		canWPNON = true;
 	}
 	
 	void DisableWeapons()
@@ -252,7 +315,18 @@ public class PlayerScript : MonoBehaviour
 		screenCanvas.SetActive(true);
 		gunScreen.GetComponent<MeshRenderer>().enabled = false;
 		gunScreenCanvas.SetActive(false);
-		carEngine.weaponsSystemsOff();
+		if(canWPNON)
+		{
+			carEngine.weaponsSystemsOff();
+			canWPNON = false;
+			StartCoroutine(wpnsOffTimer());
+		}
+	}
+	
+	IEnumerator wpnsOffTimer()
+	{
+		yield return new WaitForSeconds(carEngine.clips[5].length);
+		canWPNON = true;
 	}
 	
 	void ShowMap()
@@ -312,5 +386,18 @@ public class PlayerScript : MonoBehaviour
 		car.GetComponent<SimpleCarController>().enabled = false;
 		car.GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
 		car.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+	}
+	
+	public void GotHitByAxe()
+	{
+		//Debug.Log(carHealth);
+		if(isInCar)
+		{
+			carHealth -= AxeCarDamage;
+		}else
+		{
+			health -= AxePlayerDamage;
+		}
+		//Debug.Log(carHealth);
 	}
 }
