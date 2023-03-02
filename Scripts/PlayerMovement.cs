@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
 	float speed = 8f;
 	float gravity = -9.81f;
-	bool isGrounded;
+	public bool isGrounded;
 	float jumpHeight = 2f;
 
 	public static bool canMove = true;
@@ -32,13 +32,14 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if(canMove && !playerScript.isInCar){
 			if(Input.GetKey(KeyCode.LeftShift)){
-				speed = 17f;
+				speed = 9f;
 			}else{
-				speed = 8f;
+				speed = 5f;
 			}
 
 			if(Input.GetKeyDown("space") && isGrounded){
 				velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+				playerScript.PlayJumpSound();
 			}
 
 

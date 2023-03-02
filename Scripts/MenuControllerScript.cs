@@ -32,6 +32,8 @@ public class MenuControllerScript : MonoBehaviour
 	public Toggle anisotropicFilteringToggle;
 
 	public bool menuOpened = false;
+	
+	bool cursorWasVisible = false;
 
 	void Update(){
 		if(SceneManager.GetActiveScene().name == "MainScene"){
@@ -87,6 +89,14 @@ public class MenuControllerScript : MonoBehaviour
 	}
 
 	public void OpenMenu(){
+		//Debug.Log(UnityEngine.Cursor.lockState == CursorLockMode.Locked);
+		if(UnityEngine.Cursor.lockState == CursorLockMode.Locked)
+		{
+			cursorWasVisible = false;
+		}else
+		{
+			cursorWasVisible = true;
+		}
 		menuOpened = true;
 		PlayPressSound();
 		canvasAnim.SetBool("OpenMenu", true);
@@ -101,8 +111,11 @@ public class MenuControllerScript : MonoBehaviour
 		PlayPressSound();
 		canvasAnim.SetBool("OpenMenu", false);
 		canvasAnim.SetBool("OpenSettings", false);
-		Cursor.visible = false;
-		UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+		if(!cursorWasVisible)
+		{
+			Cursor.visible = false;
+			UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+		}
 	}
 
 	public void Quit(){
@@ -166,6 +179,20 @@ public class MenuControllerScript : MonoBehaviour
 	
 	public void Save()
 	{
+		var player = GameObject.Find("Player");
+		var playerCar = player;
+		
+		var objects = FindObjectsOfType<GameObject>();
+		var i = 0;
+		foreach(var obj in objects)
+		{
+			if(obj.name.Contains("PlayerCar"))
+			{
+				playerCar = objects[i];
+			}
+			i++;
+		}
+		
 		if(SceneManager.GetActiveScene().name == "MainScene")
 		{
 			SavingParent.SetActive(true);
@@ -179,6 +206,33 @@ public class MenuControllerScript : MonoBehaviour
 		PlayerPrefs.SetInt("matejHealth", MatejController.health);
 		PlayerPrefs.SetInt("playerHealth", PlayerScript.health);
 		PlayerPrefs.SetInt("playerCarHealth", PlayerScript.carHealth);
+		PlayerPrefs.SetInt("playerLevel", PlayerScript.playerLevel);
+		PlayerPrefs.SetFloat("carFuel", PlayerScript.carFuel);
+		
+		//PLAYERPOSITION//
+		PlayerPrefs.SetString("PlayerPos",
+			player.transform.position.x.ToString()+","+
+			player.transform.position.y.ToString()+","+
+			player.transform.position.z.ToString());
+			
+		PlayerPrefs.SetString("PlayerEuler",
+			player.transform.eulerAngles.x.ToString()+","+
+			player.transform.eulerAngles.y.ToString()+","+
+			player.transform.eulerAngles.z.ToString());
+			
+			
+			
+		PlayerPrefs.SetString("PlayerCarPos",
+			playerCar.transform.position.x.ToString()+","+
+			playerCar.transform.position.y.ToString()+","+
+			playerCar.transform.position.z.ToString());
+			
+		PlayerPrefs.SetString("PlayerCarEuler",
+			playerCar.transform.eulerAngles.x.ToString()+","+
+			playerCar.transform.eulerAngles.y.ToString()+","+
+			playerCar.transform.eulerAngles.z.ToString());
+		//PLAYERPOSITION//
+		
 		if(SceneManager.GetActiveScene().name == "MainScene")
 		{
 			inventoryScript.SaveInventory();

@@ -88,6 +88,7 @@ public class InventoryScript : MonoBehaviour
 			itemObjects.Add(spawnedObject);
 			itemsHash.Add(spawnedObject, amount);
 		}
+		SaveInventory();
 		
 		var i = -700;
 		foreach (var item in itemObjects)
@@ -117,10 +118,25 @@ public class InventoryScript : MonoBehaviour
 						i += 350;
 					}
 				}
+				SaveInventory();
 				return;
 			}
 		}
 		
 		
+		
+	}
+	
+	public bool PlayerHas(string name, int amount)
+	{
+		var list = GameControllerScript.inventory.Split(",");
+		foreach(var item in list)
+		{
+			if(item.Split("-")[0] == name && int.Parse(item.Split("-")[2]) >= amount)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -32,10 +32,10 @@ public class GunScript : MonoBehaviour
 				audio.PlaySound(2, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(gunCamera.position, gunCamera.forward*20);
-				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, 15,layerMask))
+				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, PlayerScript.LVL1GunRange,layerMask))
 				{
 					if(hit.collider.gameObject.tag == "Car" && MatejController.matejActive){
-						MatejController.health = MatejController.health-5;
+						MatejController.health = MatejController.health-PlayerScript.LVL1GunDamage;
 						matejControl.matejOnGotHit();
 					}
 				}
@@ -44,10 +44,10 @@ public class GunScript : MonoBehaviour
 				audio.PlaySound(3, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(gunCamera.position, gunCamera.forward*20);
-				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, 20,layerMask))
+				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, PlayerScript.LVL2GunRange,layerMask))
 				{
 					if(hit.collider.gameObject.tag == "Car" && MatejController.matejActive){
-						MatejController.health = MatejController.health-8;
+						MatejController.health = MatejController.health-PlayerScript.LVL2GunDamage;
 					}
 				}
 				break;
@@ -55,10 +55,10 @@ public class GunScript : MonoBehaviour
 				audio.PlaySound(4, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(gunCamera.position, gunCamera.forward*20);
-				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, 20,layerMask))
+				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, PlayerScript.LVL3GunRange,layerMask))
 				{
 					if(hit.collider.gameObject.tag == "Car" && MatejController.matejActive){
-						MatejController.health = MatejController.health-12;
+						MatejController.health = MatejController.health-PlayerScript.LVL3GunDamage;
 					}
 				}
 				break;
@@ -66,10 +66,10 @@ public class GunScript : MonoBehaviour
 				audio.PlaySound(5, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(gunCamera.position, gunCamera.forward*20);
-				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, 7,layerMask))
+				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, PlayerScript.LVL4GunRange,layerMask))
 				{
 					if(hit.collider.gameObject.tag == "Car" && MatejController.matejActive){
-						MatejController.health = MatejController.health-3;
+						MatejController.health = MatejController.health-PlayerScript.LVL4GunDamage;
 					}
 				}
 				break;
@@ -77,10 +77,10 @@ public class GunScript : MonoBehaviour
 				audio.PlaySound(6, gameController.sfxVolScale*gameController.masterVolScale);
 				//Start of the shoot animation(raycast here)
 				Debug.DrawRay(gunCamera.position, gunCamera.forward*20);
-				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, 40,layerMask))
+				if (Physics.Raycast(gunCamera.position, gunCamera.forward, out hit, PlayerScript.LVL5GunRange,layerMask))
 				{
 					if(hit.collider.gameObject.tag == "Car" && MatejController.matejActive){
-						MatejController.health = MatejController.health-50;
+						MatejController.health = MatejController.health-PlayerScript.LVL5GunDamage;
 					}
 				}
 				break;
@@ -120,7 +120,7 @@ public class GunScript : MonoBehaviour
 			case 5:
 				yield return new WaitUntil(() => Input.GetMouseButton(0) && gunCameraScript.active);
 				anim.SetBool("Shoot",true);
-				yield return new WaitForSeconds(0.05f);
+				yield return new WaitForSeconds(1f);
 				anim.SetBool("Shoot",false);
 				break;
 		}

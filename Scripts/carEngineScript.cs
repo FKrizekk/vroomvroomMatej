@@ -15,6 +15,8 @@ public class carEngineScript : MonoBehaviour
 	public GameObject player;
 	
 	public AudioClip[] clips;
+	
+	bool hasFuel = true;
 
 	void Start()
 	{
@@ -24,7 +26,15 @@ public class carEngineScript : MonoBehaviour
 	void Update()
 	{
 		source.pitch = Mathf.SmoothStep(source.pitch, pitch, Time.deltaTime*10);
-		source.volume = gameControl.sfxVolScale * gameControl.masterVolScale;	
+		source.volume = gameControl.sfxVolScale * gameControl.masterVolScale;
+		
+		if(PlayerScript.carFuel > 0)
+		{
+			hasFuel = true;
+		}else
+		{
+			hasFuel = false;
+		}
 	}
 	
 	IEnumerator engine()
@@ -34,7 +44,7 @@ public class carEngineScript : MonoBehaviour
 		pitch = 0;
 		
 		
-		yield return new WaitUntil(() => Vector3.Distance(player.transform.position,transform.position) < 20);
+		yield return new WaitUntil(() => Vector3.Distance(player.transform.position,transform.position) < 20 && hasFuel);
 		//Powering up
 		source.pitch = 0.5f;
 		pitch = 0.5f;
@@ -94,6 +104,12 @@ public class carEngineScript : MonoBehaviour
 
 
 	public void setPitch(float wantedPitch){
-		pitch = wantedPitch;
+		if(hasFuel)
+		{
+			pitch = wantedPitch;
+		}else
+		{
+			pitch = 0;
+		}
 	}
 }

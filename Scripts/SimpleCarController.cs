@@ -46,12 +46,18 @@ public class SimpleCarController : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Input.GetKey("w") || Input.GetKey("s")){
-			//engine.setPitch(1.7f);
-			engine.setPitch(0.7f);
-		}else{
-			//engine.setPitch(1f);
-			engine.setPitch(0.5f);
+		if(PlayerScript.carFuel > 0)
+		{
+			if(Input.GetKey("w") || Input.GetKey("s")){
+				//engine.setPitch(1.7f);
+				engine.setPitch(0.7f);
+			}else{
+				//engine.setPitch(1f);
+				engine.setPitch(0.5f);
+			}
+		}else
+		{
+			engine.setPitch(0);
 		}
 
 		if(Input.GetKey("a")){
@@ -68,7 +74,15 @@ public class SimpleCarController : MonoBehaviour {
 	 
 	public void FixedUpdate()
 	{
-		float motor = maxMotorTorque * Input.GetAxis("Vertical");
+		float motor;
+		if(PlayerScript.carFuel > 0)
+		{
+			motor = maxMotorTorque * Input.GetAxis("Vertical");
+		}else
+		{
+			motor = maxMotorTorque * 0;
+		}
+		
 		float steering = maxSteeringAngle * Input.GetAxis("Horizontal");
 	 
 		foreach (AxleInfo axleInfo in axleInfos) {

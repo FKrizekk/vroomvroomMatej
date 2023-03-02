@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class Cars
+{
+	public GameObject carlvl1;
+	public GameObject carlvl2;
+	public GameObject carlvl3;
+	public GameObject carlvl4;
+	public GameObject carlvl5;
+}
+
 public class GameControllerScript : MonoBehaviour
 {
 	
@@ -33,25 +43,67 @@ public class GameControllerScript : MonoBehaviour
 	
 	public InventoryScript inventoryScript;
 
+	public Cars cars;
+
 	void Start()
 	{
 		UpdateVars();
 		Debug.Log(objectivesStatus);
+		
+		
+		
+		var player = GameObject.Find("Player");
+		
+		Debug.Log("PlayerLevel: " + PlayerScript.playerLevel);
+		foreach(var car in new List<GameObject>{cars.carlvl1,cars.carlvl2,cars.carlvl3,cars.carlvl4,cars.carlvl5})
+		{
+			if(car.name.Split("lvl")[1] != (PlayerScript.playerLevel).ToString())
+			{
+				car.SetActive(false);
+			}else
+			{
+				car.SetActive(true);
+			}
+		}
+		
+		var playerCar = GameObject.Find("PlayerCarlvl"+PlayerScript.playerLevel);
+		
+		//SET PLAYER POS Vector3(1077.19995,79.4599991,83.5)
+		player.transform.position = new Vector3(
+			float.Parse(PlayerPrefs.GetString("PlayerPos", "1077.19995,79.4599991,83.5").Split(",")[0]), 
+			float.Parse(PlayerPrefs.GetString("PlayerPos", "1077.19995,79.4599991,83.5").Split(",")[1]), 
+			float.Parse(PlayerPrefs.GetString("PlayerPos", "1077.19995,79.4599991,83.5").Split(",")[2])
+		);
+		
+		//SET PLAYER ROT Vector3(0,139.199997,0)
+		player.transform.eulerAngles = new Vector3(
+			float.Parse(PlayerPrefs.GetString("PlayerEuler", "0,139.199997,0").Split(",")[0]),
+			float.Parse(PlayerPrefs.GetString("PlayerEuler", "0,139.199997,0").Split(",")[1]),
+			float.Parse(PlayerPrefs.GetString("PlayerEuler", "0,139.199997,0").Split(",")[2])
+		);
+		
+		//SET CAR POS Vector3(1073.03271,79.5800018,118.739777)
+		playerCar.transform.position = new Vector3(
+			float.Parse(PlayerPrefs.GetString("PlayerCarPos", "1073.03271,79.5800018,118.739777").Split(",")[0]),
+			float.Parse(PlayerPrefs.GetString("PlayerCarPos", "1073.03271,79.5800018,118.739777").Split(",")[1]),
+			float.Parse(PlayerPrefs.GetString("PlayerCarPos", "1073.03271,79.5800018,118.739777").Split(",")[2])
+		);
+		
+		//SET CAR ROT Vector3(0,330.17215,0)
+		playerCar.transform.eulerAngles = new Vector3(
+			float.Parse(PlayerPrefs.GetString("PlayerCarEuler", "0,330.17215,0").Split(",")[0]),
+			float.Parse(PlayerPrefs.GetString("PlayerCarEuler", "0,330.17215,0").Split(",")[1]),
+			float.Parse(PlayerPrefs.GetString("PlayerCarEuler", "0,330.17215,0").Split(",")[2])
+		);
+		
+		if(Vector3.Distance(player.transform.position,playerCar.transform.position) < 5)
+		{
+			player.GetComponent<PlayerScript>().SpawnGetIn(playerCar);
+		}
 	}
 
 	void Update(){
-		if(Input.GetKeyDown("g"))
-		{
-			var temp = objectivesStatus.ToCharArray();
-			temp[0] = 'E';
-			objectivesStatus = new string(temp);
-		}
-		if(Input.GetKeyDown("h"))
-		{
-			var temp = objectivesStatus.ToCharArray();
-			temp[0] = 'Y';
-			objectivesStatus = new string(temp);
-		}
+
 	}
 
 	public void UpdateVars(){
@@ -66,6 +118,8 @@ public class GameControllerScript : MonoBehaviour
 		PlayerScript.carHealth = PlayerPrefs.GetInt("playerCarHealth", 1000);
 		dialogVolScale = PlayerPrefs.GetFloat("dialogVolScale", 0.4f);
 		inventory = PlayerPrefs.GetString("inventory", "");
+		PlayerScript.playerLevel = PlayerPrefs.GetInt("playerLevel", 1);
+		PlayerScript.carFuel = PlayerPrefs.GetFloat("carFuel", 60f);
 		if(SceneManager.GetActiveScene().name == "MainScene")
 		{
 			inventoryScript.UpdateInventory();

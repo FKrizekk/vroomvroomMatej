@@ -1,0 +1,36 @@
+Date : 2023-02-28 20:49:52
+Directory : c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts
+Total : 7 files,  94 codes, 2 comments, 34 blanks, all 130 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Markdown |          4 |         75 |          0 |         26 |        101 |
+| C#       |          2 |         18 |          2 |          8 |         28 |
+| JSON     |          1 |          1 |          0 |          0 |          1 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                  |          7 |         94 |          2 |         34 |        130 |
+| . (Files)                                                                                                          |          2 |         18 |          2 |          8 |         28 |
+| .VSCodeCounter                                                                                                     |          5 |         76 |          0 |         26 |        102 |
+| .VSCodeCounter\2023-02-28_20-01-57                                                                                 |          5 |         76 |          0 |         26 |        102 |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                           | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\details.md      | Markdown |         40 |          0 |          6 |         46 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\diff-details.md | Markdown |          9 |          0 |          6 |         15 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\diff.md         | Markdown |         12 |          0 |          7 |         19 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\results.json    | JSON     |          1 |          0 |          0 |          1 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\results.md      | Markdown |         14 |          0 |          7 |         21 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\ButtonScript.cs                                    | C#       |          6 |          0 |          3 |          9 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GarageScript.cs                                    | C#       |         12 |          2 |          5 |         19 |
+| Total                                                                                                              |          |         94 |          2 |         34 |        130 |
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

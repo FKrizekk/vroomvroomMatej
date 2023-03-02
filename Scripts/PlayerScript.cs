@@ -2,34 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
 	//---------DAMAGE VALUES------------
 	
 	//AXE MATEJ->PLAYER
-	int AxeCarDamage = 100;
-	int AxePlayerDamage = 50;
+	public static int AxeCarDamage = 100;
+	public static int AxePlayerDamage = 50;
 	
 	//ROCKET MATEJ->PLAYER
-	int RocketCarDamage = 150;
-	int RocketPlayerDamage = 50;
+	public static int RocketCarDamage = 150;
+	public static int RocketPlayerDamage = 50;
 	
 	//GUN PLAYER->MATEJ
-	int LVL1GunDamage = 10;
-	int LVL2GunDamage = 20;
-	int LVL3GunDamage = 30;
-	int LVL4GunDamage = 40;
+	public static int LVL1GunDamage = 5;
+	public static int LVL2GunDamage = 8;
+	public static int LVL3GunDamage = 12;
+	public static int LVL4GunDamage = 3;
+	public static int LVL5GunDamage = 50;
 	
 	
 	//---------DAMAGE VALUES------------
 	
+	//---------RANGE VALUES-------------
+	
+	//GUN PLAYER->MATEJ
+	public static int LVL1GunRange = 15;
+	public static int LVL2GunRange = 20;
+	public static int LVL3GunRange = 20;
+	public static int LVL4GunRange = 10;
+	public static int LVL5GunRange = 40;
+	
+	//---------RANGE VALUES-------------
 	
 	
 	
 	public static int health = 100;
 	
 	public static int carHealth = 1000;
+	
+	public static float carFuel = 60f; //Liters
+	
+	public static int playerLevel = 1;
 	
 
 	public static GameObject car;
@@ -73,10 +89,44 @@ public class PlayerScript : MonoBehaviour
 	bool canWPNOFF = true;
 	
 	RaycastHit lastHit;
+	
+	public static bool disabledWPNOnStart = false;
+	
+	public Image playerHealthBar;
+	public Image carHealthBar;
+	
+	public List<AudioClip> footsteps;
+	
+	public List<AudioClip> runFootsteps;
+	
+	public List<AudioClip> jumpFootsteps;
+	
+	public AudioSource cameraSource;
+	public GameControllerScript gameControl;
+	public PlayerMovement playerMovement;
+	
+	bool died = false;
 	// Start is called before the first frame update
 	void Start()
 	{
 		layerMask = ~layerMask;
+		StartCoroutine(startdwpn());
+		StartCoroutine(fuelConsumption());
+		StartCoroutine(Footsteps());
+	}
+	
+	IEnumerator fuelConsumption()
+	{
+		yield return new WaitUntil(() => isInCar);
+		yield return new WaitForSeconds(0.1f);
+		carFuel -= 0.01f;
+		
+		StartCoroutine(fuelConsumption());
+	}
+	
+	IEnumerator startdwpn()
+	{
+		yield return new WaitUntil(() => disabledWPNOnStart);
 		DisableWeapons();
 	}
 	
@@ -84,6 +134,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		car = GameObject.Find(CAR);
 		
+		//Debug.Log(GameObject.Find(CAR+"/Screen").name);
 		screen = GameObject.Find(CAR+"/Screen");
 		gunScreen = GameObject.Find(CAR+"/GunScreen");
 		screenCanvas = GameObject.Find(CAR+"/Screen/ScreenCanvas");
@@ -101,30 +152,51 @@ public class PlayerScript : MonoBehaviour
 			gunCameraScript = GameObject.Find("/"+CAR+"/WEAPONS PARENT/Canon_lvl_"+lvl+"/canon_lvl_"+lvl+"/GunCamera").GetComponent<GunCameraScript>();
 		}
 		carEngine = GameObject.Find(CAR).GetComponent<carEngineScript>();
+		
+		if(!disabledWPNOnStart)
+		{
+			
+			disabledWPNOnStart = true;
+		}
+	}
+	
+	IEnumerator Footsteps()
+	{
+		yield return new WaitUntil(() => Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d") && !isInCar);
+		if(playerMovement.isGrounded)
+		{
+			if(Input.GetKey(KeyCode.LeftShift))
+			{
+				cameraSource.PlayOneShot(runFootsteps[Random.Range(0,20)], gameControl.masterVolScale*gameControl.sfxVolScale);
+			}else
+			{
+				cameraSource.PlayOneShot(footsteps[Random.Range(0,20)], gameControl.masterVolScale*gameControl.sfxVolScale);
+			}
+		}
+		yield return new WaitForSeconds(0.3f);
+		StartCoroutine(Footsteps());
+	}
+	
+	public void PlayJumpSound()
+	{
+		cameraSource.PlayOneShot(jumpFootsteps[Random.Range(0,10)], gameControl.masterVolScale*gameControl.sfxVolScale);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if(Input.GetKeyDown("r"))
+		if(health <= 0 || carHealth <= 0)
 		{
-			invScript.AddItem("Gold bars", 0, 1);
+			Death();
+			died = true;
 		}
 		
-		if(Input.GetKeyDown("y"))
-		{
-			invScript.RemoveItem("Gold bars", 1);
-		}
+		//Debug.Log(carFuel);
+		//Debug.Log(carHealth + "\n" + carHealth*100 + "\n" + carHealth*100/1000 + "\n" + (float)((100*carHealth)/1000)/100);
+		carHealthBar.fillAmount = (float)((100*carHealth)/1000)/100;
+		playerHealthBar.fillAmount = (float)((100*health)/100)/100;
+
 		
-		if(Input.GetKeyDown("v"))
-		{
-			invScript.AddItem("Kuřecí řízek", 1, 1);
-		}
-		
-		if(Input.GetKeyDown("b"))
-		{
-			invScript.RemoveItem("Kuřecí řízek", 1);
-		}
 		
 		if(Input.GetKeyDown("i"))
 		{
@@ -140,7 +212,10 @@ public class PlayerScript : MonoBehaviour
 		}
 		
 		
-		
+		if(Input.GetKeyDown("v"))
+		{
+			playerLevel = 1;
+		}
 		
 		
 		
@@ -287,6 +362,18 @@ public class PlayerScript : MonoBehaviour
 		}
 	}
 	
+	public void Death()
+	{
+		GetComponent<CharacterController>().enabled = false;
+		gameObject.AddComponent(typeof(Rigidbody));
+		Rigidbody rb = GetComponent<Rigidbody>();
+		rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+		if(isInCar)
+		{
+			GetOut();
+		}
+	}
+	
 	void EnableWeapons()
 	{
 		isGunning = true;
@@ -353,6 +440,23 @@ public class PlayerScript : MonoBehaviour
 		Cursor.visible = false;
 		UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 		mapPanelAnim.SetBool("ShowMap", false);
+	}
+	
+	
+	public void SpawnGetIn(GameObject CAR)
+	{
+		isInCar = true;
+		canGetIn = false;
+		//Debug.Log("is in car");
+		GetComponent<MeshRenderer>().enabled = false;
+		GetComponent<CapsuleCollider>().isTrigger = true;
+		GetComponent<CharacterController>().enabled = !GetComponent<CharacterController>().enabled;
+		CAR.GetComponent<SimpleCarController>().enabled = true;
+		transform.SetParent(CAR.transform,false);
+		PlayerCamera.transform.SetParent(null,true);
+		transform.localPosition = new Vector3(-0.330000013f,0.200000003f,0.0199999996f);
+		transform.rotation = Quaternion.Euler(CAR.transform.eulerAngles);
+		CAR.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 	}
 
 	void GetIn(){
