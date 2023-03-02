@@ -22,15 +22,18 @@ public class InventoryScript : MonoBehaviour
 	
 	public void UpdateInventory()
 	{
-		var list = GameControllerScript.inventory.Split(',');
-		foreach(var item in list)
+		if(GameControllerScript.inventory != "")
 		{
-			Debug.Log("LOADED INV ITEM AS: " + item);
-			string name = item.Split('-')[0];
-			int spriteIndex = int.Parse(item.Split('-')[1]);
-			int amount = int.Parse(item.Split('-')[2]);
-			
-			AddItem(name, spriteIndex, amount);
+			var list = GameControllerScript.inventory.Split(',');
+			foreach(var item in list)
+			{
+				Debug.Log("LOADED INV ITEM AS: " + item);
+				string name = item.Split('-')[0];
+				int spriteIndex = int.Parse(item.Split('-')[1]);
+				int amount = int.Parse(item.Split('-')[2]);
+				
+				AddItem(name, spriteIndex, amount);
+			}
 		}
 	}
 	
@@ -138,5 +141,18 @@ public class InventoryScript : MonoBehaviour
 			}
 		}
 		return false;
+	}
+	
+	public int GetAmountOf(string name)
+	{
+		var list = GameControllerScript.inventory.Split(",");
+		foreach(var item in list)
+		{
+			if(item.Split("-")[0] == name)
+			{
+				return int.Parse(item.Split("-")[2]);
+			}
+		}
+		return 0;
 	}
 }

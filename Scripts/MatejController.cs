@@ -53,6 +53,8 @@ public class MatejController : MonoBehaviour
 	
 	int axeTries = 3;
 	int	axeCTries = 0;
+	
+	bool endMatej = false;
 
 
 	GameObject playercar;
@@ -259,6 +261,11 @@ public class MatejController : MonoBehaviour
 			yield return null;
 		}
 	}
+	
+	public void PlayerDeath()
+	{
+		endMatej = true;
+	}
 
 
 
@@ -319,11 +326,12 @@ public class MatejController : MonoBehaviour
 		
 		if(health>5000)
 		{
-			yield return new WaitUntil(() => health < startHealth-100 || Time.time - startTime > 360);
+			yield return new WaitUntil(() => health < startHealth-100 || Time.time - startTime > 360 || endMatej);
 		}else
 		{
-			yield return new WaitUntil(() => health < startHealth-30 || Time.time - startTime > 30);
+			yield return new WaitUntil(() => health < startHealth-30 || Time.time - startTime > 30 || endMatej);
 		}
+		endMatej = false;
 		
 		//---------------------DEACTIVATED-----------------------------------------
 		DeActivateMatej();

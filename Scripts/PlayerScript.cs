@@ -106,6 +106,10 @@ public class PlayerScript : MonoBehaviour
 	public PlayerMovement playerMovement;
 	
 	bool died = false;
+	
+	public Animator youDiedPanel;
+	
+	public MenuControllerScript menuControl;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -185,10 +189,11 @@ public class PlayerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(health <= 0 || carHealth <= 0)
+		if(health <= 0 || carHealth <= 0 && !died)
 		{
 			Death();
 			died = true;
+			
 		}
 		
 		//Debug.Log(carFuel);
@@ -367,11 +372,22 @@ public class PlayerScript : MonoBehaviour
 		GetComponent<CharacterController>().enabled = false;
 		gameObject.AddComponent(typeof(Rigidbody));
 		Rigidbody rb = GetComponent<Rigidbody>();
-		rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
+		//rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
 		if(isInCar)
 		{
-			GetOut();
+			//GetOut();
 		}
+		youDiedPanel.SetBool("Died", true);
+	}
+	
+	public void Respawn()
+	{
+		GetComponent<CharacterController>().enabled = true;
+		Destroy(GetComponent<Rigidbody>());
+		GetIn();
+		
+		menuControl.Save();
+		died = false;
 	}
 	
 	void EnableWeapons()
@@ -459,7 +475,7 @@ public class PlayerScript : MonoBehaviour
 		CAR.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 	}
 
-	void GetIn(){
+	public void GetIn(){
 		isInCar = true;
 		canGetIn = false;
 		//Debug.Log("is in car");
