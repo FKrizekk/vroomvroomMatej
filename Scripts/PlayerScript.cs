@@ -167,7 +167,7 @@ public class PlayerScript : MonoBehaviour
 	IEnumerator Footsteps()
 	{
 		yield return new WaitUntil(() => Input.GetKey("w") || Input.GetKey("s") || Input.GetKey("a") || Input.GetKey("d") && !isInCar);
-		if(playerMovement.isGrounded)
+		if(playerMovement.isGrounded && !isInCar)
 		{
 			if(Input.GetKey(KeyCode.LeftShift))
 			{
@@ -382,9 +382,12 @@ public class PlayerScript : MonoBehaviour
 	
 	public void Respawn()
 	{
-		GetComponent<CharacterController>().enabled = true;
-		Destroy(GetComponent<Rigidbody>());
+		GetComponent<CapsuleCollider>().isTrigger = true;
 		GetIn();
+		GetOut();
+		GetIn();
+		Destroy(GetComponent<Rigidbody>());
+		
 		
 		menuControl.Save();
 		died = false;

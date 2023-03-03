@@ -270,8 +270,8 @@ public class MatejController : MonoBehaviour
 
 
 	IEnumerator MatejLoop(){
-		//yield return new WaitForSeconds(Random.Range(5*60, 15*60));
-		yield return new WaitForSeconds(Random.Range(10, 30));
+		yield return new WaitForSeconds(Random.Range(5*60, 15*60));
+		//yield return new WaitForSeconds(Random.Range(10, 30));
 		yield return new WaitUntil(() => PlayerMovement.canMove == true);
 		ActivateMatej();
 		StartCoroutine(MatejSoundLoop());

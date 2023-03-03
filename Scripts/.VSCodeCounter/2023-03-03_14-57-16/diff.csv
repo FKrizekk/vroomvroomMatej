@@ -1,0 +1,20 @@
+"filename", "language", "C#", "Markdown", "JSON", "comment", "blank", "total"
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\details.md", "Markdown", 0, 47, 0, 0, 6, 53
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\diff-details.md", "Markdown", 0, 16, 0, 0, 6, 22
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\diff.md", "Markdown", 0, 19, 0, 0, 7, 26
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\results.json", "JSON", 0, 0, 1, 0, 0, 1
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\results.md", "Markdown", 0, 19, 0, 0, 7, 26
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\DeathPanelRemoveGold.cs", "C#", 55, 0, 0, 2, 13, 70
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GARAGETRIGGERSCRIPT.cs", "C#", 14, 0, 0, 0, 3, 17
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GameControllerScript.cs", "C#", 37, 0, 0, 4, 13, 54
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GarageScript.cs", "C#", 13, 0, 0, -2, 1, 12
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\InventoryScript.cs", "C#", 29, 0, 0, 0, 3, 32
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MatejController.cs", "C#", 6, 0, 0, 0, 2, 8
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MenuControllerScript.cs", "C#", 41, 0, 0, 3, 10, 54
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\NPCScript.cs", "C#", 72, 0, 0, 3, 17, 92
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\ObjectOptimizer.cs", "C#", 12, 0, 0, 2, 5, 19
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\PlayerMovement.cs", "C#", 1, 0, 0, 0, 0, 1
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\PlayerScript.cs", "C#", 68, 0, 0, 5, 17, 90
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\SimpleCarController.cs", "C#", 13, 0, 0, 0, 1, 14
+"c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\carEngineScript.cs", "C#", 14, 0, 0, 0, 2, 16
+"Total", "-", 375, 101, 1, 17, 113, 607

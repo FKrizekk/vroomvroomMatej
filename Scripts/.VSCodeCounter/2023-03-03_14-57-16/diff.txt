@@ -1,0 +1,47 @@
+Date : 2023-03-03 14:57:16
+Directory : c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts
+Total : 18 files,  477 codes, 17 comments, 113 blanks, all 607 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         13 |        375 |         17 |         87 |        479 |
+| Markdown |          4 |        101 |          0 |         26 |        127 |
+| JSON     |          1 |          1 |          0 |          0 |          1 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                  |         18 |        477 |         17 |        113 |        607 |
+| . (Files)                                                                                                          |         13 |        375 |         17 |         87 |        479 |
+| .VSCodeCounter                                                                                                     |          5 |        102 |          0 |         26 |        128 |
+| .VSCodeCounter\2023-02-28_20-49-52                                                                                 |          5 |        102 |          0 |         26 |        128 |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                           | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\details.md      | Markdown |         47 |          0 |          6 |         53 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\diff-details.md | Markdown |         16 |          0 |          6 |         22 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\diff.md         | Markdown |         19 |          0 |          7 |         26 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\results.json    | JSON     |          1 |          0 |          0 |          1 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\results.md      | Markdown |         19 |          0 |          7 |         26 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\DeathPanelRemoveGold.cs                            | C#       |         55 |          2 |         13 |         70 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GARAGETRIGGERSCRIPT.cs                             | C#       |         14 |          0 |          3 |         17 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GameControllerScript.cs                            | C#       |         37 |          4 |         13 |         54 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GarageScript.cs                                    | C#       |         13 |         -2 |          1 |         12 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\InventoryScript.cs                                 | C#       |         29 |          0 |          3 |         32 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MatejController.cs                                 | C#       |          6 |          0 |          2 |          8 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MenuControllerScript.cs                            | C#       |         41 |          3 |         10 |         54 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\NPCScript.cs                                       | C#       |         72 |          3 |         17 |         92 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\ObjectOptimizer.cs                                 | C#       |         12 |          2 |          5 |         19 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\PlayerMovement.cs                                  | C#       |          1 |          0 |          0 |          1 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\PlayerScript.cs                                    | C#       |         68 |          5 |         17 |         90 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\SimpleCarController.cs                             | C#       |         13 |          0 |          1 |         14 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\carEngineScript.cs                                 | C#       |         14 |          0 |          2 |         16 |
+| Total                                                                                                              |          |        477 |         17 |        113 |        607 |
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

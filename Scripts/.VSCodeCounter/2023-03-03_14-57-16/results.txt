@@ -1,0 +1,76 @@
+Date : 2023-03-03 14:57:16
+Directory : c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts
+Total : 46 files,  2673 codes, 160 comments, 677 blanks, all 3510 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         36 |      2,495 |        160 |        625 |      3,280 |
+| Markdown |          8 |        176 |          0 |         52 |        228 |
+| JSON     |          2 |          2 |          0 |          0 |          2 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                               | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                  |         46 |      2,673 |        160 |        677 |      3,510 |
+| . (Files)                                                                                                          |         36 |      2,495 |        160 |        625 |      3,280 |
+| .VSCodeCounter                                                                                                     |         10 |        178 |          0 |         52 |        230 |
+| .VSCodeCounter\2023-02-28_20-01-57                                                                                 |          5 |         76 |          0 |         26 |        102 |
+| .VSCodeCounter\2023-02-28_20-49-52                                                                                 |          5 |        102 |          0 |         26 |        128 |
++--------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                           | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\details.md      | Markdown |         40 |          0 |          6 |         46 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\diff-details.md | Markdown |          9 |          0 |          6 |         15 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\diff.md         | Markdown |         12 |          0 |          7 |         19 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\results.json    | JSON     |          1 |          0 |          0 |          1 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-01-57\results.md      | Markdown |         14 |          0 |          7 |         21 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\details.md      | Markdown |         47 |          0 |          6 |         53 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\diff-details.md | Markdown |         16 |          0 |          6 |         22 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\diff.md         | Markdown |         19 |          0 |          7 |         26 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\results.json    | JSON     |          1 |          0 |          0 |          1 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\.VSCodeCounter\2023-02-28_20-49-52\results.md      | Markdown |         19 |          0 |          7 |         26 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\AudioControllerScript.cs                           | C#       |         19 |          2 |          7 |         28 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\AxeTrigger.cs                                      | C#       |         14 |          3 |          4 |         21 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\ButtonScript.cs                                    | C#       |          6 |          0 |          3 |          9 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\CameraScript.cs                                    | C#       |         58 |          3 |         20 |         81 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\CarScreenScript.cs                                 | C#       |         83 |          6 |         17 |        106 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\DeathPanelRemoveGold.cs                            | C#       |         55 |          2 |         13 |         70 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GARAGETRIGGERSCRIPT.cs                             | C#       |         14 |          0 |          3 |         17 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GameControllerScript.cs                            | C#       |        123 |         10 |         30 |        163 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GarageScript.cs                                    | C#       |         25 |          0 |          6 |         31 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GoldBarsScript.cs                                  | C#       |         14 |          0 |          3 |         17 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GoldSpawner.cs                                     | C#       |         16 |          0 |          5 |         21 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GunCameraScript.cs                                 | C#       |         62 |          3 |         21 |         86 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GunScreenScript.cs                                 | C#       |         38 |          6 |         10 |         54 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\GunScript.cs                                       | C#       |        112 |          7 |         12 |        131 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\Highlight.cs                                       | C#       |         46 |          9 |         13 |         68 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\IntroPanelScript.cs                                | C#       |         20 |          2 |          2 |         24 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\IntroSceneScript.cs                                | C#       |         30 |          0 |          7 |         37 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\InventoryScript.cs                                 | C#       |        135 |          1 |         22 |        158 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\KarelScript.cs                                     | C#       |          6 |          0 |          3 |          9 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MatejController.cs                                 | C#       |        294 |         14 |         77 |        385 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MatejMovement.cs                                   | C#       |         43 |          6 |         18 |         67 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MenuControllerScript.cs                            | C#       |        213 |          5 |         45 |        263 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MissileScript.cs                                   | C#       |         38 |          3 |          8 |         49 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\MusicControllerScript.cs                           | C#       |         52 |          6 |         15 |         73 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\NPCScript.cs                                       | C#       |        268 |         31 |         76 |        375 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\ObjectOptimizer.cs                                 | C#       |         12 |          2 |          5 |         19 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\ObjectiveScript.cs                                 | C#       |         16 |          0 |          5 |         21 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\PlayerMovement.cs                                  | C#       |         44 |          2 |         19 |         65 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\PlayerScript.cs                                    | C#       |        400 |         28 |         98 |        526 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\QuestItemScript.cs                                 | C#       |         12 |          0 |          2 |         14 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\SavingStuffScript.cs                               | C#       |         10 |          0 |          2 |         12 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\SimpleCarController.cs                             | C#       |         82 |          4 |         15 |        101 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\carEngineScript.cs                                 | C#       |         85 |          4 |         27 |        116 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\mapObjScript.cs                                    | C#       |         26 |          0 |          7 |         33 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\mapPanelScript.cs                                  | C#       |         17 |          1 |          3 |         21 |
+| c:\Users\Coldy\vroom vroom matej\Assets\vroomvroomMatej\Scripts\weaponsSystemsScript.cs                            | C#       |          7 |          0 |          2 |          9 |
+| Total                                                                                                              |          |      2,673 |        160 |        677 |      3,510 |
++--------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -17,7 +17,7 @@ public class InventoryScript : MonoBehaviour
 	Dictionary<string, int> nameSpriteIndexDict = new Dictionary<string, int>
 	{
 		{"Gold bars", 0},
-		{"Kuřecí řízek", 1}
+		{"Noodles", 1}
 	};
 	
 	public void UpdateInventory()

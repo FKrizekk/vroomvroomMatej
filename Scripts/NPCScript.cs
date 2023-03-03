@@ -68,6 +68,18 @@ public class Karel
 	}
 }
 
+[System.Serializable]
+public class Lojza
+{
+	public AudioClip[] clipsArrive;
+	public AudioClip[] clipsBuy;
+	public AudioClip[] clipsLeave;
+	public AudioClip[] clipsLeaveNoBuy;
+	public AudioClip[] clipsNoMoney;
+	
+	public Animator anim;
+}
+
 public class NPCScript : MonoBehaviour
 {
 	
@@ -83,6 +95,7 @@ public class NPCScript : MonoBehaviour
 	
 	
 	int karelChosen = 0;
+	int lojzaChosen = 0;
 	
 	
 	public GameControllerScript gameControl;
@@ -102,12 +115,18 @@ public class NPCScript : MonoBehaviour
 	
 	public Pepa Pepa;
 	public Karel Karel;
+	public Lojza Lojza;
 	
 	
 	
 	public void ChooseKarel(int x)
 	{
 		karelChosen = x;
+	}
+	
+	public void ChooseLojza(int x)
+	{
+		lojzaChosen = x;
 	}
 	
 	
@@ -123,14 +142,85 @@ public class NPCScript : MonoBehaviour
 
 	public void Talk(){
 		PlayerMovement.canMove = false;
-		if(gameObject.name != "Karel")
+		if(gameObject.name != "Karel" && gameObject.name != "Lojza")
 		{
 			StartCoroutine(Conversation());
+		}else if(gameObject.name == "Lojza")
+		{
+			StartCoroutine(LojzaTalk());
+			
+			didSomething = false;	
 		}else
 		{
 			StartCoroutine(GarageTalk());
 			didSomething = false;
 		}
+	}
+	
+	IEnumerator LojzaTalk()
+	{
+		//LOCK PLAYER MOVEMENT
+		PlayerMovement.canMove = false;
+		
+		//OPEN LOJZA MENU
+		Lojza.anim.SetBool("Show", true);
+		
+		//SHOW MOUSE
+		Cursor.visible = true;
+		UnityEngine.Cursor.lockState = CursorLockMode.None;
+		
+		yield return new WaitUntil(() => lojzaChosen != 0);
+		switch (lojzaChosen)
+		{
+			case 1:
+				didSomething = true;
+				Debug.Log(invScript.PlayerHas("Gold bars", 5));
+				if(invScript.PlayerHas("Gold bars", 5))
+				{
+					source.PlayOneShot(Lojza.clipsBuy[Random.Range(0,4)], gameControl.masterVolScale*gameControl.dialogVolScale);
+					PlayerScript.health += 25;
+					invScript.RemoveItem("Gold bars", 5);
+				}else
+				{
+					source.PlayOneShot(Lojza.clipsNoMoney[Random.Range(0, 1)], gameControl.masterVolScale*gameControl.dialogVolScale);
+				}
+				break;
+			case 2:
+				if(!didSomething)
+				{
+					source.PlayOneShot(Lojza.clipsLeaveNoBuy[Random.Range(0,3)], gameControl.masterVolScale*gameControl.dialogVolScale);
+				}else{
+					source.PlayOneShot(Lojza.clipsLeave[Random.Range(0,2)], gameControl.masterVolScale*gameControl.dialogVolScale);
+				}
+				
+				//HIDE LOJZA MENU
+				Lojza.anim.SetBool("Show", false);
+				
+				//HIDE MOUSE
+				Cursor.visible = false;
+				UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+				
+				//PLAY LEAVE VOICELINE
+				PlayerMovement.canMove = true;
+				
+				menuControl.Save();
+				break;
+		}
+		if(lojzaChosen != 2)
+		{
+			lojzaChosen = 0;
+			StartCoroutine(LojzaTalk());
+		}else
+		{
+			lojzaChosen = 0;
+			Lojza.anim.SetBool("Show", false);
+			
+		}
+	}
+	
+	public void LojzaArriveSound()
+	{
+		source.PlayOneShot(Lojza.clipsArrive[Random.Range(0,5)], gameControl.masterVolScale*gameControl.dialogVolScale);
 	}
 	
 	IEnumerator GarageTalk()
