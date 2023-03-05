@@ -304,6 +304,9 @@ public class PlayerScript : MonoBehaviour
 						case "Pepa quest item":
 							hit.collider.gameObject.GetComponent<QuestItemScript>().FinishQuest(0);
 							break;
+						case "kocka":
+							hit.collider.gameObject.GetComponent<catStatueScript>().Get();
+							break;
 					}
 					Destroy(hit.collider.gameObject);
 				}

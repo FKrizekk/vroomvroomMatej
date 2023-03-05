@@ -177,6 +177,52 @@ public class MenuControllerScript : MonoBehaviour
 		gameController.UpdateVars();
 	}
 	
+	public void QuitGame()
+	{
+		Save();
+		Invoke("Close", 1);
+	}
+	
+	public void RESETALLPROGRESS()
+	{
+		PlayerPrefs.SetInt("catStatuesFound", 0);
+		PlayerPrefs.SetString("objectivesStatus", "");
+		PlayerPrefs.SetInt("matejHealth", 10000);
+		PlayerPrefs.SetInt("playerHealth", 100);
+		PlayerPrefs.SetInt("playerCarHealth", 1000);
+		PlayerPrefs.SetInt("playerLevel", 1);
+		PlayerPrefs.SetFloat("carFuel", 60);
+		
+		//PLAYERPOSITION//Vector3(1076.27002,79.0299988,82.1399994)
+		PlayerPrefs.SetString("PlayerPos",
+			(1076.27002).ToString()+","+
+			(79.0299988).ToString()+","+
+			(82.1399994).ToString());
+			
+		PlayerPrefs.SetString("PlayerEuler",
+			(0).ToString()+","+
+			(0).ToString()+","+
+			(0).ToString());
+			
+			
+			//Vector3(1073.37,78.6900024,81.8799973)
+		PlayerPrefs.SetString("PlayerCarPos",
+			(1073.37).ToString()+","+
+			(78.6900024).ToString()+","+
+			(81.8799973).ToString());
+			
+		PlayerPrefs.SetString("PlayerCarEuler",
+			(0).ToString()+","+
+			(0).ToString()+","+
+			(0).ToString());
+		//PLAYERPOSITION//
+	}
+	
+	void Close()
+	{
+		Application.Quit();
+	}
+	
 	public void Save()
 	{
 		var player = GameObject.Find("Player");
@@ -197,6 +243,7 @@ public class MenuControllerScript : MonoBehaviour
 		{
 			SavingParent.SetActive(true);
 		}
+		PlayerPrefs.SetInt("catStatuesFound", GameControllerScript.catStatuesFound);
 		PlayerPrefs.SetFloat("sfxVolScale", sfxSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("musicVolScale", musicSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("masterVolScale", masterSlider.GetComponent<Slider>().value);

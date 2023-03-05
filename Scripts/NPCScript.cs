@@ -80,6 +80,22 @@ public class Lojza
 	public Animator anim;
 }
 
+[System.Serializable]
+public class Arnost
+{
+	public AudioClip[] clipsAC;
+	public AudioClip[] clipsBF;
+	public AudioClip[] clipsF;
+	
+	public string[] linesAC = new string[] {
+		"h h h he hej kamo ja viděl nějakou kočku sošku wtf??!!! c c c co co sní mám dělat??!! o o oz označil jsem ti ji na m m m m mapě!!"};
+	public string[] linesBF = new string[] {
+		"j j j j j ještě si je nenašel v v všechny!!!!"};
+	public string[] linesF = new string[] {
+		"c c c c c co tys je fakt našel v v všechny, j j já myslel že to je n n nemožný, určitě se teď nestane nic z z z zvláštního…"};
+	
+}
+
 public class NPCScript : MonoBehaviour
 {
 	
@@ -116,6 +132,7 @@ public class NPCScript : MonoBehaviour
 	public Pepa Pepa;
 	public Karel Karel;
 	public Lojza Lojza;
+	public Arnost Arnost;
 	
 	
 	
@@ -421,31 +438,27 @@ public class NPCScript : MonoBehaviour
 				
 				break;
 				
-			case "Karel":
+			case "Arnost":
 				currentStatusIndex = 1; //Status Index
-				name = "Karel"; //Jmeno NPC
+				name = "Arnost"; //Jmeno NPC
 				
 				if(objectivesStatus[currentStatusIndex] == 'E'){
-					lines = Karel.linesAC; //Vybrat titulky
-					clips = Karel.clipsAC;
+					lines = Arnost.linesAC; //Vybrat titulky
+					clips = Arnost.clipsAC;
 					objectivesStatus[currentStatusIndex] = 'N'; //Setne pres Index assignuti objectivu do temp. listu
 					GameControllerScript.objectivesStatus = new string(objectivesStatus); //setne objStatus na temp
 				}else if(objectivesStatus[currentStatusIndex] == 'N')
 				{
-					lines = Karel.linesBF;
-					clips = Karel.clipsBF;
+					lines = Arnost.linesBF;
+					clips = Arnost.clipsBF;
 				}else if(objectivesStatus[currentStatusIndex] == 'Y')
 				{
 					//QUEST COMPLETED
-					lines = Karel.linesF;
-					clips = Karel.clipsF;
+					lines = Arnost.linesF;
+					clips = Arnost.clipsF;
 					invScript.AddItem("Gold bars",0,10);
 					objectivesStatus[currentStatusIndex] = 'C'; //Setne pres Index assignuti objectivu do temp. listu
 					GameControllerScript.objectivesStatus = new string(objectivesStatus);
-				}else if(objectivesStatus[currentStatusIndex] == 'C')
-				{
-					lines = Karel.linesC;
-					clips = Karel.clipsC;
 				}
 				
 				break;

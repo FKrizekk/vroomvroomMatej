@@ -34,6 +34,7 @@ public class GameControllerScript : MonoBehaviour
 	//Tasked and Completed? No = N, Yes = Y
 	//Not tasked = E
 	public static string objectivesStatus = "";
+	public static int catStatuesFound = 0;
 	
 	//INVENTORY
 	//ITEMNAME-IMGINDEX-AMOUNT,ITEMNAME-IMGINDEX-AMOUNT...
@@ -107,6 +108,7 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	public void UpdateVars(){
+		catStatuesFound = PlayerPrefs.GetInt("catStatuesFound", 0);
 		sfxVolScale = PlayerPrefs.GetFloat("sfxVolScale", 0.4f);
 		musicVolScale = PlayerPrefs.GetFloat("musicVolScale", 0.4f);
 		masterVolScale = PlayerPrefs.GetFloat("masterVolScale", 0.4f);
