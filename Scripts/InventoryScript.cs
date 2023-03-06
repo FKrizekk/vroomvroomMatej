@@ -51,6 +51,7 @@ public class InventoryScript : MonoBehaviour
 				inv = inv+tempName+"-"+nameSpriteIndexDict[tempName].ToString()+"-"+itemsHash[key].ToString();
 			}
 		}
+		GameControllerScript.inventory = inv;
 		PlayerPrefs.SetString("inventory", inv);
 		Debug.Log("SAVED INVENTORY AS: " + inv);
 	}
@@ -135,6 +136,7 @@ public class InventoryScript : MonoBehaviour
 		var list = GameControllerScript.inventory.Split(",");
 		foreach(var item in list)
 		{
+			Debug.Log("_"+item+"_");
 			if(item.Split("-")[0] == name && int.Parse(item.Split("-")[2]) >= amount)
 			{
 				return true;

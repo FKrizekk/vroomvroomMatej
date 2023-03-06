@@ -10,10 +10,24 @@ public class AltarScript : MonoBehaviour
 	
 	GameControllerScript gameControl;
 	
+	Animator anim;
+	
+	PortalScript portal;
+	
 	void Start()
 	{
 		gameControl = GameObject.Find("GameController").GetComponent<GameControllerScript>();
 		altarSource = GetComponent<AudioSource>();
+		anim = GetComponent<Animator>();
+		portal = GameObject.Find("Portal").GetComponent<PortalScript>();
+	}
+	
+	void Update()
+	{
+		if(Input.GetKeyDown("y"))
+		{
+			anim.SetBool("Exist", true);
+		}
 	}
 	
 	public void BangSound()
@@ -29,6 +43,11 @@ public class AltarScript : MonoBehaviour
 	public void IdleHum()
 	{
 		StartCoroutine(Hum());
+	}
+	
+	public void SpawnIgolath()
+	{
+		portal.SpawnIgolath();
 	}
 	
 	IEnumerator Hum()
