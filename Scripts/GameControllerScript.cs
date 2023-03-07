@@ -101,10 +101,27 @@ public class GameControllerScript : MonoBehaviour
 		{
 			player.GetComponent<PlayerScript>().SpawnGetIn(playerCar);
 		}
+		
+		StartCoroutine(CatCheck());
+		if(objectivesStatus[2] == 'Y')
+		{
+			NPCScript.hideArnost = true;
+			GameObject.Find("Altar").GetComponent<Animator>().SetBool("Lit",true);
+			GameObject.Find("Altar").GetComponent<Animator>().SetBool("Exist",true);
+		}
+	}
+	
+	IEnumerator CatCheck()
+	{
+		yield return new WaitUntil(() => catStatuesFound >= 5);
+		var temp = objectivesStatus.ToCharArray();
+		temp[2] = 'Y';
+		objectivesStatus = new string(temp);
+		
 	}
 
 	void Update(){
-
+		
 	}
 
 	public void UpdateVars(){

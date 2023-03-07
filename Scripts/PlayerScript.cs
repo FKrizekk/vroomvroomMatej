@@ -273,9 +273,13 @@ public class PlayerScript : MonoBehaviour
 			
 
 			if(canTalk && PlayerMovement.canMove){
-				interactText.text = "Press 'E' to interact with " + lookingAt;
-				if(Input.GetKeyDown("e")){
-					hit.collider.gameObject.GetComponent<NPCScript>().Talk();
+				//ARNOST ALL QUESTS COMPLETED CHECK
+				if(lookingAt != "Arnost" || GameControllerScript.objectivesStatus[0] == 'C' && GameControllerScript.objectivesStatus[1] == 'C')
+				{
+					interactText.text = "Press 'E' to interact with " + lookingAt;
+					if(Input.GetKeyDown("e")){
+						hit.collider.gameObject.GetComponent<NPCScript>().Talk();
+					}
 				}
 			}
 			

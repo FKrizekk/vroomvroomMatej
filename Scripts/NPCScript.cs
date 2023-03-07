@@ -122,6 +122,7 @@ public class NPCScript : MonoBehaviour
 	
 	bool didSomething = false;
 	
+	public static bool hideArnost = false;
 
 	//LINES
 	//AC = Quest acquire
@@ -155,6 +156,14 @@ public class NPCScript : MonoBehaviour
 		invScript = GameObject.Find("/Canvas/InventoryPanel/").GetComponent<InventoryScript>();
 		gameControl = GameObject.Find("GameController").GetComponent<GameControllerScript>();
 		matejControl = GameObject.Find("MatejPARENT").GetComponent<MatejController>();
+		StartCoroutine(hider());
+	}
+	
+	IEnumerator hider()
+	{
+		yield return new WaitUntil(() => hideArnost);
+		GameObject.Find("Arnost").SetActive(false);
+		
 	}
 
 	public void Talk(){
@@ -451,14 +460,21 @@ public class NPCScript : MonoBehaviour
 				{
 					lines = Arnost.linesBF;
 					clips = Arnost.clipsBF;
+					
+					//REMOVE THIS
+					GameObject.Find("Altar").GetComponent<Animator>().SetBool("Exist",true);
+					
 				}else if(objectivesStatus[currentStatusIndex] == 'Y')
 				{
 					//QUEST COMPLETED
 					lines = Arnost.linesF;
 					clips = Arnost.clipsF;
-					invScript.AddItem("Gold bars",0,10);
+					invScript.AddItem("Gold bars",0,25);
 					objectivesStatus[currentStatusIndex] = 'C'; //Setne pres Index assignuti objectivu do temp. listu
 					GameControllerScript.objectivesStatus = new string(objectivesStatus);
+					
+					GameObject.Find("Altar").GetComponent<Animator>().SetBool("Exist",true);
+					
 				}
 				
 				break;
@@ -474,5 +490,11 @@ public class NPCScript : MonoBehaviour
 		}
 		menuControl.Save();
 		StopTalking();
+		hideArnost = true;
+	}
+	
+	void Update()
+	{
+		
 	}
 }
