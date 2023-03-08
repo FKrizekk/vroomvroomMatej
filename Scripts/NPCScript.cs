@@ -156,7 +156,10 @@ public class NPCScript : MonoBehaviour
 		invScript = GameObject.Find("/Canvas/InventoryPanel/").GetComponent<InventoryScript>();
 		gameControl = GameObject.Find("GameController").GetComponent<GameControllerScript>();
 		matejControl = GameObject.Find("MatejPARENT").GetComponent<MatejController>();
-		StartCoroutine(hider());
+		if(gameObject.name == "Arnost")
+		{
+			StartCoroutine(hider());
+		}
 	}
 	
 	IEnumerator hider()
@@ -461,8 +464,7 @@ public class NPCScript : MonoBehaviour
 					lines = Arnost.linesBF;
 					clips = Arnost.clipsBF;
 					
-					//REMOVE THIS
-					GameObject.Find("Altar").GetComponent<Animator>().SetBool("Exist",true);
+					
 					
 				}else if(objectivesStatus[currentStatusIndex] == 'Y')
 				{
@@ -490,7 +492,10 @@ public class NPCScript : MonoBehaviour
 		}
 		menuControl.Save();
 		StopTalking();
-		hideArnost = true;
+		if(gameObject.name == "Arnost" && objectivesStatus[1] == 'C')
+		{
+			hideArnost = true;
+		}
 	}
 	
 	void Update()

@@ -115,7 +115,7 @@ public class GameControllerScript : MonoBehaviour
 	{
 		yield return new WaitUntil(() => catStatuesFound >= 5);
 		var temp = objectivesStatus.ToCharArray();
-		temp[2] = 'Y';
+		temp[1] = 'Y';
 		objectivesStatus = new string(temp);
 		
 	}
