@@ -185,6 +185,12 @@ public class MenuControllerScript : MonoBehaviour
 	
 	public void RESETALLPROGRESS()
 	{
+		PlayerPrefs.SetInt("cat1", 0);
+		PlayerPrefs.SetInt("cat2", 0);
+		PlayerPrefs.SetInt("cat3", 0);
+		PlayerPrefs.SetInt("cat4", 0);
+		PlayerPrefs.SetInt("cat5", 0);
+		
 		PlayerPrefs.SetInt("catStatuesFound", 0);
 		PlayerPrefs.SetString("objectivesStatus", "");
 		PlayerPrefs.SetInt("matejHealth", 10000);

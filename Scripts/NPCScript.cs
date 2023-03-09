@@ -99,6 +99,9 @@ public class Arnost
 [System.Serializable]
 public class Cyril
 {
+	public Animator houseAnim;
+	
+	
 	public AudioClip[] clipsAC;
 	public AudioClip[] clipsBF;
 	public AudioClip[] clipsF;
@@ -517,7 +520,8 @@ public class NPCScript : MonoBehaviour
 					lines = Cyril.linesBF;
 					clips = Cyril.clipsBF;
 					
-					
+					objectivesStatus[currentStatusIndex] = 'Y'; //Setne pres Index assignuti objectivu do temp. listu
+					GameControllerScript.objectivesStatus = new string(objectivesStatus); //setne objStatus na temp
 					
 				}else if(objectivesStatus[currentStatusIndex] == 'Y')
 				{
@@ -528,6 +532,7 @@ public class NPCScript : MonoBehaviour
 					objectivesStatus[currentStatusIndex] = 'C'; //Setne pres Index assignuti objectivu do temp. listu
 					GameControllerScript.objectivesStatus = new string(objectivesStatus);
 					
+					Cyril.houseAnim.SetBool("ExplodeHouse",true);
 					
 				}else if(objectivesStatus[currentStatusIndex] == 'C')
 				{

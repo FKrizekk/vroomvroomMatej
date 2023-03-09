@@ -36,6 +36,12 @@ public class GameControllerScript : MonoBehaviour
 	public static string objectivesStatus = "";
 	public static int catStatuesFound = 0;
 	
+	public static int cat1 = 0;
+	public static int cat2 = 0;
+	public static int cat3 = 0;
+	public static int cat4 = 0;
+	public static int cat5 = 0;
+	
 	//INVENTORY
 	//ITEMNAME-IMGINDEX-AMOUNT,ITEMNAME-IMGINDEX-AMOUNT...
 	public static string inventory = "Gold bars-0-1";
@@ -125,17 +131,66 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	public void UpdateVars(){
+		cat1 = PlayerPrefs.GetInt("cat1", 0);
+		cat2 = PlayerPrefs.GetInt("cat2", 0);
+		cat3 = PlayerPrefs.GetInt("cat3", 0);
+		cat4 = PlayerPrefs.GetInt("cat4", 0);
+		cat5 = PlayerPrefs.GetInt("cat5", 0);
+		
+		var objects = FindObjectsOfType<GameObject>();
+		var i = 0;
+		foreach(var obj in objects)
+		{
+			if(obj.name.Contains("soska"))
+			{
+				switch (int.Parse(obj.name.Split("soska")[1]))
+				{
+					case 1:
+						if(cat1 == 1)
+						{
+							objects[i].SetActive(false);
+						}
+						break;
+					case 2:
+						if(cat2 == 1)
+						{
+							objects[i].SetActive(false);
+						}
+						break;
+					case 3:
+						if(cat3 == 1)
+						{
+							objects[i].SetActive(false);
+						}
+						break;
+					case 4:
+						if(cat4 == 1)
+						{
+							objects[i].SetActive(false);
+						}
+						break;
+					case 5:
+						if(cat5 == 1)
+						{
+							objects[i].SetActive(false);
+						}
+						break;
+				}
+			}
+			i++;
+		}
+		
 		catStatuesFound = PlayerPrefs.GetInt("catStatuesFound", 0);
 		sfxVolScale = PlayerPrefs.GetFloat("sfxVolScale", 0.4f);
-		musicVolScale = PlayerPrefs.GetFloat("musicVolScale", 0.4f);
-		masterVolScale = PlayerPrefs.GetFloat("masterVolScale", 0.4f);
+		musicVolScale = PlayerPrefs.GetFloat("musicVolScale", 0.2f);
+		masterVolScale = PlayerPrefs.GetFloat("masterVolScale", 0.5f);
 		sensitivity = PlayerPrefs.GetFloat("sensitivity", 0.4f) * 100;
 		objIndex = PlayerPrefs.GetInt("objIndex", 400);
 		objectivesStatus = PlayerPrefs.GetString("objectivesStatus", new string('E',objectivesRemaining.Length));
 		MatejController.health = PlayerPrefs.GetInt("matejHealth", 10000);
 		PlayerScript.health = PlayerPrefs.GetInt("playerHealth", 100);
 		PlayerScript.carHealth = PlayerPrefs.GetInt("playerCarHealth", 1000);
-		dialogVolScale = PlayerPrefs.GetFloat("dialogVolScale", 0.4f);
+		dialogVolScale = PlayerPrefs.GetFloat("dialogVolScale", 0.9f);
 		inventory = PlayerPrefs.GetString("inventory", "");
 		PlayerScript.playerLevel = PlayerPrefs.GetInt("playerLevel", 1);
 		PlayerScript.carFuel = PlayerPrefs.GetFloat("carFuel", 60f);
