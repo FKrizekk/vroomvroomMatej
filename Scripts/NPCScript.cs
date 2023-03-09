@@ -96,6 +96,27 @@ public class Arnost
 	
 }
 
+[System.Serializable]
+public class Cyril
+{
+	public AudioClip[] clipsAC;
+	public AudioClip[] clipsBF;
+	public AudioClip[] clipsF;
+	public AudioClip[] clipsC;
+	
+	public string[] linesAC = new string[] {
+		"Čauuu, hej kámo ten muj hloupej brácha Metoděj řikal, že mi přinese štrůdl a NEUDĚLAL TO!",
+		"Vem si tenhle DYNAMIT a odpal mu BARÁK!!, ON SI TO ZASLOUŽÍ!!"};
+	public string[] linesBF = new string[] {
+		"NO TAK UŽ TO UDĚLEJ!"};
+	public string[] linesF = new string[] {
+		"DÍK MOC KÁMO, UŽ TEĎ SE CEJTÍM LÍP!",
+		"Tady vem si tohle zlato."};
+	public string[] linesC = new string[] {
+		"UŽ DOBRÝ, UŽ NIC NECHCI."};
+	
+}
+
 public class NPCScript : MonoBehaviour
 {
 	
@@ -134,6 +155,7 @@ public class NPCScript : MonoBehaviour
 	public Karel Karel;
 	public Lojza Lojza;
 	public Arnost Arnost;
+	public Cyril Cyril;
 	
 	
 	
@@ -477,6 +499,40 @@ public class NPCScript : MonoBehaviour
 					
 					GameObject.Find("Altar").GetComponent<Animator>().SetBool("Exist",true);
 					
+				}
+				
+				break;
+			
+			case "Cyril":
+				currentStatusIndex = 2; //Status Index
+				name = "Cyril"; //Jmeno NPC
+				
+				if(objectivesStatus[currentStatusIndex] == 'E'){
+					lines = Cyril.linesAC; //Vybrat titulky
+					clips = Cyril.clipsAC;
+					objectivesStatus[currentStatusIndex] = 'N'; //Setne pres Index assignuti objectivu do temp. listu
+					GameControllerScript.objectivesStatus = new string(objectivesStatus); //setne objStatus na temp
+				}else if(objectivesStatus[currentStatusIndex] == 'N')
+				{
+					lines = Cyril.linesBF;
+					clips = Cyril.clipsBF;
+					
+					
+					
+				}else if(objectivesStatus[currentStatusIndex] == 'Y')
+				{
+					//QUEST COMPLETED
+					lines = Cyril.linesF;
+					clips = Cyril.clipsF;
+					invScript.AddItem("Gold bars",0,15);
+					objectivesStatus[currentStatusIndex] = 'C'; //Setne pres Index assignuti objectivu do temp. listu
+					GameControllerScript.objectivesStatus = new string(objectivesStatus);
+					
+					
+				}else if(objectivesStatus[currentStatusIndex] == 'C')
+				{
+					lines = Cyril.linesC;
+					clips = Cyril.clipsC;
 				}
 				
 				break;
