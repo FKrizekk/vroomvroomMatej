@@ -295,7 +295,15 @@ public class PlayerScript : MonoBehaviour
 					//Debug.Log("Highlight");
 				}
 				lastHit = hit;
-				interactText.text = "Press 'E' to pickup " + hit.collider.gameObject.tag;
+				if(hit.collider.gameObject.tag != "dynamite")
+				{
+					interactText.text = "Press 'E' to pickup " + hit.collider.gameObject.tag;
+				}else
+				{
+					interactText.text = "Press 'E' to place Dynamite";
+				}
+				
+				
 				if(Input.GetKeyDown("e"))
 				{
 					
@@ -311,8 +319,15 @@ public class PlayerScript : MonoBehaviour
 						case "kocka":
 							hit.collider.gameObject.GetComponent<catStatueScript>().Get();
 							break;
+						case "dynamite":
+							
+							hit.collider.gameObject.GetComponent<DynamiteScript>().Place();
+							break;
 					}
-					Destroy(hit.collider.gameObject);
+					if(hit.collider.gameObject.tag != "dynamite")
+					{
+						Destroy(hit.collider.gameObject);
+					}
 				}
 			}else
 			{

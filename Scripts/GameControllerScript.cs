@@ -30,11 +30,12 @@ public class GameControllerScript : MonoBehaviour
 	//Progress
 	public ObjectiveScript objScript;
 	public static int objIndex = 400;//400 = its like a null
-	public static string[] objectivesRemaining = new string[] {"Najdi <color=blue> kuřecí řízek","Poptej se o <color=blue> matějovi </color> ve vesnici", "AMONGYS", "ATGfaAGG", "HUGA CHUGA","AMOGOS AMOGOS", "BUNGA junhga"};
+	public static string[] objectivesRemaining = new string[] {"Najdi <color=blue> kuřecí řízek","Poptej se o <color=blue> matějovi </color> ve vesnici", "Polož na metodějův dům dynamit", "ATGfaAGG", "HUGA CHUGA","AMOGOS AMOGOS", "BUNGA junhga"};
 	//Tasked and Completed? No = N, Yes = Y
 	//Not tasked = E
 	public static string objectivesStatus = "";
 	public static int catStatuesFound = 0;
+	public static int dynPlaced = 0;
 	
 	public static int cat1 = 0;
 	public static int cat2 = 0;

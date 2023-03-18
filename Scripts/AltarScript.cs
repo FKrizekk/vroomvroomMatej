@@ -20,14 +20,17 @@ public class AltarScript : MonoBehaviour
 		altarSource = GetComponent<AudioSource>();
 		anim = GetComponent<Animator>();
 		portal = GameObject.Find("Portal").GetComponent<PortalScript>();
+		
+		if(GameObject.Find("Arnost") == null)
+		{
+			anim.SetBool("Exist", true);
+			anim.SetBool("Lit", true);
+		}
 	}
 	
 	void Update()
 	{
-		if(Input.GetKeyDown("y"))
-		{
-			anim.SetBool("Exist", true);
-		}
+		
 	}
 	
 	public void BangSound()

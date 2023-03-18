@@ -185,6 +185,19 @@ public class NPCScript : MonoBehaviour
 		{
 			StartCoroutine(hider());
 		}
+		if(gameObject.name == "Cyril")
+		{
+			StartCoroutine(dynCheck());
+		}
+	}
+	
+	IEnumerator dynCheck()
+	{
+		yield return new WaitUntil(() => GameControllerScript.dynPlaced == 4);
+		var objectivesStatus = GameControllerScript.objectivesStatus.ToCharArray();
+		objectivesStatus[2] = 'Y'; //Setne pres Index assignuti objectivu do temp. listu
+		GameControllerScript.objectivesStatus = new string(objectivesStatus);
+		
 	}
 	
 	IEnumerator hider()
@@ -520,10 +533,7 @@ public class NPCScript : MonoBehaviour
 					lines = Cyril.linesBF;
 					clips = Cyril.clipsBF;
 					
-					objectivesStatus[currentStatusIndex] = 'Y'; //Setne pres Index assignuti objectivu do temp. listu
-					GameControllerScript.objectivesStatus = new string(objectivesStatus); //setne objStatus na temp
-					
-				}else if(objectivesStatus[currentStatusIndex] == 'Y')
+				}else if(objectivesStatus[currentStatusIndex] == 'Y' && GameControllerScript.dynPlaced >= 4)	
 				{
 					//QUEST COMPLETED
 					lines = Cyril.linesF;
