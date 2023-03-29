@@ -24,6 +24,7 @@ public class MenuControllerScript : MonoBehaviour
 	public Slider musicSlider;
 	public Slider sensSlider;
 	public Slider dialogSlider;
+	public Slider ambientSlider;
 	
 	public Slider antiAliasingSlider;
 	
@@ -160,6 +161,7 @@ public class MenuControllerScript : MonoBehaviour
 		musicSlider.GetComponent<Slider>().value = gameController.musicVolScale;
 		masterSlider.GetComponent<Slider>().value = gameController.masterVolScale;
 		dialogSlider.GetComponent<Slider>().value = gameController.dialogVolScale;
+		ambientSlider.GetComponent<Slider>().value = gameController.ambientVolScale;
 		sensSlider.GetComponent<Slider>().value = gameController.sensitivity / 100;
 		vsyncToggle.isOn = gameController.vsync;
 		antiAliasingSlider.GetComponent<Slider>().value = gameController.antiAliasing;
@@ -198,6 +200,8 @@ public class MenuControllerScript : MonoBehaviour
 		PlayerPrefs.SetInt("playerCarHealth", 1000);
 		PlayerPrefs.SetInt("playerLevel", 1);
 		PlayerPrefs.SetFloat("carFuel", 60);
+		
+		inventoryScript.EraseInventory();
 		
 		//PLAYERPOSITION//Vector3(1076.27002,79.0299988,82.1399994)
 		PlayerPrefs.SetString("PlayerPos",
@@ -255,6 +259,7 @@ public class MenuControllerScript : MonoBehaviour
 		PlayerPrefs.SetFloat("masterVolScale", masterSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("sensitivity", sensSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetFloat("dialogVolScale", dialogSlider.GetComponent<Slider>().value);
+		PlayerPrefs.SetFloat("ambientVolScale", ambientSlider.GetComponent<Slider>().value);
 		PlayerPrefs.SetString("objectivesStatus", GameControllerScript.objectivesStatus);
 		PlayerPrefs.SetInt("matejHealth", MatejController.health);
 		PlayerPrefs.SetInt("playerHealth", PlayerScript.health);

@@ -50,7 +50,7 @@ public class MusicControllerScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         if(!inAction){
-            musicSource.PlayOneShot(musicClips[cClip], gameControl.musicVolScale);
+            musicSource.PlayOneShot(musicClips[cClip], gameControl.ambientVolScale);
             //Debug.Log("Played clip: " + musicClips[cClip].name + " with scale: " + (float)gameControl.musicVolScale);
             yield return new WaitForSeconds(musicClips[cClip].length);
             cClip++;

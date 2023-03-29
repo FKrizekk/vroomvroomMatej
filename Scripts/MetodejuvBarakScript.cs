@@ -6,11 +6,12 @@ public class MetodejuvBarakScript : MonoBehaviour
 {
 	public AudioClip[] explosionSounds;
 	
+	public AudioClip scream;
+	
 	public AudioSource source;
 	
 	public GameControllerScript gameControl;
 	
-	public MetodejScript metodej;
 	
 	void Start()
 	{
@@ -24,6 +25,6 @@ public class MetodejuvBarakScript : MonoBehaviour
 	
 	public void PlayMetodejScream()
 	{
-		//metodej.PlayScream();
+		source.PlayOneShot(scream, gameControl.masterVolScale*gameControl.sfxVolScale);
 	}
 }

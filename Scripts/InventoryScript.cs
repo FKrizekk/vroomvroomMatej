@@ -55,6 +55,14 @@ public class InventoryScript : MonoBehaviour
 		PlayerPrefs.SetString("inventory", inv);
 		Debug.Log("SAVED INVENTORY AS: " + inv);
 	}
+	
+	public void EraseInventory()
+	{
+		string inv = "";
+		GameControllerScript.inventory = inv;
+		PlayerPrefs.SetString("inventory", inv);
+		Debug.Log("ERASED INVENTORY");
+	}
 
 	// Update is called once per frame
 	void Update()

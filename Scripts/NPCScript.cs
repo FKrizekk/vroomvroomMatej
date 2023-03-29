@@ -120,8 +120,30 @@ public class Cyril
 	
 }
 
+[System.Serializable]
+public class Igolath
+{
+	public GameObject SPHERUSINFINITUS;
+	
+	public IgolathScript igoScript;
+	
+	public AudioClip[] clipsAC;
+	public AudioClip[] clipsBF;
+	public AudioClip[] clipsF;
+	
+	public string[] linesAC = new string[] {
+		"Hele jestli mi přineseš takovou jednu věc, tak něco uvidíš."};
+	public string[] linesBF = new string[] {
+		"No tak dělej."};
+	public string[] linesF = new string[] {
+		"NO JO TAK KOUKEJ!"};
+	
+	
+}
+
 public class NPCScript : MonoBehaviour
 {
+	
 	
 	public TMP_Text subtitlesText;
 	
@@ -133,6 +155,7 @@ public class NPCScript : MonoBehaviour
 	
 	public InventoryScript invScript;
 	
+	bool sphereOn = false;
 	
 	int karelChosen = 0;
 	int lojzaChosen = 0;
@@ -159,6 +182,7 @@ public class NPCScript : MonoBehaviour
 	public Lojza Lojza;
 	public Arnost Arnost;
 	public Cyril Cyril;
+	public Igolath Igolath;
 	
 	
 	
@@ -548,6 +572,41 @@ public class NPCScript : MonoBehaviour
 				{
 					lines = Cyril.linesC;
 					clips = Cyril.clipsC;
+				}
+				
+				break;
+
+			case "Igolath":
+				currentStatusIndex = 3; //Status Index
+				name = "Igolath"; //Jmeno NPC
+				
+				if(objectivesStatus[currentStatusIndex] == 'E'){
+					lines = Igolath.linesAC; //Vybrat titulky
+					clips = Igolath.clipsAC;
+					objectivesStatus[currentStatusIndex] = 'N'; //Setne pres Index assignuti objectivu do temp. listu
+					GameControllerScript.objectivesStatus = new string(objectivesStatus); //setne objStatus na temp
+					Instantiate(Igolath.SPHERUSINFINITUS);
+					sphereOn = true;
+				}else if(objectivesStatus[currentStatusIndex] == 'N')
+				{
+					lines = Igolath.linesBF;
+					clips = Igolath.clipsBF;
+					if(!sphereOn)
+					{
+						Instantiate(Igolath.SPHERUSINFINITUS);
+						sphereOn = true;
+					}
+					
+				}else if(objectivesStatus[currentStatusIndex] == 'Y')	
+				{
+					//QUEST COMPLETED
+					lines = Igolath.linesF;
+					clips = Igolath.clipsF;
+					invScript.AddItem("Gold bars",0,30);
+					objectivesStatus[currentStatusIndex] = 'C'; //Setne pres Index assignuti objectivu do temp. listu
+					GameControllerScript.objectivesStatus = new string(objectivesStatus);
+					
+					Igolath.igoScript.StartENDING();
 				}
 				
 				break;

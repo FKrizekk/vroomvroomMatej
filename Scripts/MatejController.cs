@@ -83,8 +83,17 @@ public class MatejController : MonoBehaviour
 			item.SetActive(false);
 		}
 		blockCountdown = playercar.transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<TMP_Text>();
-		GunScreenScript.RefreshVars(playercar.transform.GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetComponent<Camera>());
 		
+		StartCoroutine(xd());
+		
+		
+	}
+	
+	IEnumerator xd()
+	{
+		yield return new WaitForSeconds(2);
+		Debug.Log(playercar.transform.GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetComponent<Camera>());
+		GunScreenScript.RefreshVars(playercar.transform.GetChild(2).GetChild(0).GetChild(0).GetChild(0).GetComponent<Camera>());
 	}
 
 	void Update()
@@ -270,7 +279,8 @@ public class MatejController : MonoBehaviour
 
 
 	IEnumerator MatejLoop(){
-		yield return new WaitForSeconds(Random.Range(5*60, 15*60));
+		//yield return new WaitForSeconds(Random.Range(5*60, 15*60));
+		yield return new WaitUntil(() => Input.GetKeyDown("u"));
 		//yield return new WaitForSeconds(Random.Range(10, 30));
 		yield return new WaitUntil(() => PlayerMovement.canMove == true);
 		ActivateMatej();

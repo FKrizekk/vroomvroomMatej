@@ -323,6 +323,9 @@ public class PlayerScript : MonoBehaviour
 							
 							hit.collider.gameObject.GetComponent<DynamiteScript>().Place();
 							break;
+						case "infinite":
+							hit.collider.gameObject.GetComponent<QuestItemScript>().FinishQuest(3);
+							break;
 					}
 					if(hit.collider.gameObject.tag != "dynamite")
 					{
